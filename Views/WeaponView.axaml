@@ -1,0 +1,181 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="using:SRWJEditV.ViewModels"
+        mc:Ignorable="d"
+        x:Class="SRWJEditV.Views.WeaponView"
+        Title="Weapon Editor"
+		WindowStartupLocation="CenterOwner"
+		Width="850"
+		Height="550"
+		ExtendClientAreaToDecorationsHint="True"
+		FontFamily="ヒラギノ角ゴ Pro W3, Hiragino Kaku Gothic Pro, Osaka, メイリオ, Meiryo, ＭＳ Ｐゴシック, MS PGothic, MS Mincho, sans-serif">
+	<Design.DataContext>
+		<vm:WeaponViewModel/>
+	</Design.DataContext>
+	<DockPanel>
+		<StackPanel DockPanel.Dock="Top" Orientation="Vertical">
+			<StackPanel Orientation="Horizontal">
+				<Image Margin="5" Source="/Assets/SRWJEdit.ico" Width="15"/>
+				<TextBlock Margin="5" IsHitTestVisible="False">Weapon Editor</TextBlock>
+			</StackPanel>
+		</StackPanel>
+		<Panel>
+			<ExperimentalAcrylicBorder IsHitTestVisible="False">
+				<ExperimentalAcrylicBorder.Material>
+					<ExperimentalAcrylicMaterial
+						BackgroundSource="Digger"
+						TintColor="Black"
+						TintOpacity="1"
+						MaterialOpacity="0.65"/>
+				</ExperimentalAcrylicBorder.Material>
+			</ExperimentalAcrylicBorder>
+			<DockPanel>
+				<!--Weapons List-->
+				<StackPanel Orientation="Vertical" DockPanel.Dock="Left" HorizontalAlignment="Left" Margin="10,0,0,0">
+					<TextBlock FontSize="14" Margin="8,0,0,3">Weapons:</TextBlock>
+
+					<ListBox Width="250" Height="300"
+							 VerticalAlignment="Top"
+							 Items="{Binding WeaponNames}" SelectedIndex="{Binding SelectedIndex}"
+							 ScrollViewer.VerticalScrollBarVisibility="Visible">
+						<ListBox.ItemTemplate>
+							<DataTemplate>
+								<Border Margin="5,0,0,0">
+									<TextBlock FontSize="12" Text="{Binding}"/>
+								</Border>
+							</DataTemplate>
+						</ListBox.ItemTemplate>
+						<ListBox.Styles>
+							<Style Selector="ListBoxItem">
+								<Setter Property="Margin" Value="0"/>
+								<Setter Property="Padding" Value="0"/>
+							</Style>
+							<Style Selector="ScrollViewer">
+								<Setter Property="AllowAutoHide" Value="False"/>
+							</Style>
+						</ListBox.Styles>
+					</ListBox>
+				</StackPanel>
+
+				<!--Stats Section-->
+				<StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,0,0,0">
+					<TextBlock FontSize="14" Margin="8,0,0,3">Stats:</TextBlock>
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Width="60" Margin="0,5,0,0">Name1:</TextBlock>
+						<TextBox Width="250" MaxHeight="20" FontSize="12" Text="{Binding WeaponName1}" MaxLength="{Binding MaxName1}" />
+					</StackPanel>
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Width="110" Margin="0,5,0,0">Name1 Pointer:</TextBlock>
+						<ComboBox Name="Point1Combo" Width="200" Items="{Binding ObservablePointers}" SelectedIndex="{Binding SelectedPointer1}">
+							<ComboBox.ItemTemplate>
+								<DataTemplate>
+									<Panel>
+										<StackPanel Orientation="Horizontal">
+											<TextBlock Text="{Binding Key, StringFormat={}{0:X8}}"/>
+											<TextBlock IsVisible="{Binding #Point1Combo.IsDropDownOpen}" Text=": "/>
+											<TextBlock IsVisible="{Binding #Point1Combo.IsDropDownOpen}" Text="{Binding Value}"/>
+										</StackPanel>
+									</Panel>
+								</DataTemplate>
+							</ComboBox.ItemTemplate>
+						</ComboBox>
+					</StackPanel>
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Width="60" Margin="0,5,0,0">Name2:</TextBlock>
+						<TextBox Width="250" MaxHeight="20" FontSize="12" Text="{Binding WeaponName2}" MaxLength="{Binding MaxName2}"/>
+					</StackPanel>
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Width="110" Margin="0,5,0,0">Name2 Pointer:</TextBlock>
+						<ComboBox Name="Point2Combo" Width="200" Items="{Binding ObservablePointers}" SelectedIndex="{Binding SelectedPointer2}">
+							<ComboBox.ItemTemplate>
+								<DataTemplate>
+									<Panel>
+										<StackPanel Orientation="Horizontal">
+											<TextBlock Text="{Binding Key, StringFormat={}{0:X8}}"/>
+											<TextBlock IsVisible="{Binding #Point2Combo.IsDropDownOpen}" Text=": "/>
+											<TextBlock IsVisible="{Binding #Point2Combo.IsDropDownOpen}" Text="{Binding Value}"/>
+										</StackPanel>
+									</Panel>
+								</DataTemplate>
+							</ComboBox.ItemTemplate>
+						</ComboBox>
+					</StackPanel>
+					<!--Attack -->
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Width="60" Margin="0,5,0,0" Text="Attack:"/>
+						<NumericUpDown ShowButtonSpinner="False" Maximum="32767" Minimum="-32768" Increment="100" Value="{Binding SelectedWeapon.Attack}" Width="90"/>
+					</StackPanel>
+					<!--Energy / Spirit -->
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Width="80" Margin="0,5,0,0" Text="Energy:"/>
+						<NumericUpDown ShowButtonSpinner="False" Maximum="255" Minimum="0" Increment="10" Value="{Binding SelectedWeapon.Energy}" Width="70"/>
+						<TextBlock Width="80" Margin="10,5,0,0" Text="Spirit:"/>
+						<NumericUpDown ShowButtonSpinner="False" Maximum="255" Minimum="0" Increment="10" Value="{Binding SelectedWeapon.Spirit}" Width="70"/>
+					</StackPanel>
+					<!--Min / Max Range-->
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Width="80" Margin="0,5,0,0" Text="MinRange:"/>
+						<NumericUpDown ShowButtonSpinner="False" Maximum="127" Minimum="1" Increment="1" Value="{Binding SelectedWeapon.MinimumRange}" Width="70"/>
+						<TextBlock Width="80" Margin="10,5,0,0" Text="MaxRange:"/>
+						<NumericUpDown ShowButtonSpinner="False" Maximum="127" Minimum="1" Increment="1" Value="{Binding SelectedWeapon.MaximumRange}" Width="70"/>
+					</StackPanel>
+					<!--Hit / Critical-->
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Width="80" Margin="0,5,0,0" Text="Hit+:"/>
+						<NumericUpDown ShowButtonSpinner="False" Maximum="127" Minimum="-128" Increment="10" Value="{Binding SelectedWeapon.Hit}" Width="70"/>
+						<TextBlock Width="80" Margin="10,5,0,0" Text="Critial+:"/>
+						<NumericUpDown ShowButtonSpinner="False" Maximum="127" Minimum="-128" Increment="10" Value="{Binding SelectedWeapon.Critical}" Width="70"/>
+					</StackPanel>
+					<!--Bullet Flag / Bullets-->
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Width="80" Margin="0,5,0,0" Text="Bullet Type:"/>
+						<ComboBox Items="{Binding BulletTypes}"  SelectedIndex="{Binding BulletTypeIndex}" Width="70">
+						</ComboBox>
+						<TextBlock Width="80" Margin="10,5,0,0" Text="Bullets:"/>
+						<NumericUpDown ShowButtonSpinner="False" Maximum="255" Minimum="0" Increment="1" Value="{Binding SelectedWeapon.Bullet}" Width="70"/>
+					</StackPanel>
+				</StackPanel>
+				<!--Flags/Checkboxes-->
+				<StackPanel VerticalAlignment="Top" Margin="0,0,0,0">
+					<TextBlock FontSize="14" Margin="15,0,0,3">Weapon Flags:</TextBlock>
+					<ListBox Height="215" Width="210" Items="{Binding WeaponTypes}" SelectedIndex="{Binding WeaponTypeIndex}" Padding="0,3,0,0">
+						<ListBox.ItemTemplate>
+							<DataTemplate>
+								<StackPanel Orientation="Horizontal" Margin="10,-3,0,-3">
+									<CheckBox IsChecked="{Binding Item1}"  />
+									<TextBlock FontSize="12" Margin="0,8,0,0" Text="{Binding Item2}"/>
+								</StackPanel>
+							</DataTemplate>
+						</ListBox.ItemTemplate>
+						<ListBox.Styles>
+							<Style Selector="ListBoxItem">
+								<Setter Property="Margin" Value="0"/>
+								<Setter Property="Padding" Value="0"/>
+							</Style>
+						</ListBox.Styles>
+					</ListBox>
+					<TextBlock FontSize="14" Margin="15,0,0,3">Weapon Characteristics:</TextBlock>
+					<ListBox Height="215" Width="210" Items="{Binding WeaponChars}" SelectedIndex="{Binding WeaponTypeIndex}" Padding="0,3,0,0">
+						<ListBox.ItemTemplate>
+							<DataTemplate>
+								<StackPanel Orientation="Horizontal" Margin="10,-3,0,-3">
+									<CheckBox IsChecked="{Binding Item1}" />
+									<TextBlock FontSize="12" Margin="0,8,0,0" Text="{Binding Item2}"/>
+								</StackPanel>
+							</DataTemplate>
+						</ListBox.ItemTemplate>
+						<ListBox.Styles>
+							<Style Selector="ListBoxItem">
+								<Setter Property="Margin" Value="0"/>
+								<Setter Property="Padding" Value="0"/>
+							</Style>
+						</ListBox.Styles>
+					</ListBox>
+				</StackPanel>
+			</DockPanel>
+		</Panel>
+
+	</DockPanel>
+</Window>

@@ -1,0 +1,58 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:SRWJEditV.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="450"
+        x:Class="SRWJEditV.Views.MainWindow"
+        Icon="/Assets/SRWJEdit.ico"
+        Title="SRWJEditV"
+		Width="600"
+		Height="450"
+		TransparencyLevelHint="AcrylicBlur"
+		WindowStartupLocation="CenterScreen"
+		Background="Black"
+		ExtendClientAreaToDecorationsHint="True">
+
+	<Design.DataContext>
+		<vm:MainWindowViewModel/>
+	</Design.DataContext>
+	<DockPanel>
+		<StackPanel DockPanel.Dock="Top" Orientation="Vertical">
+			<StackPanel Orientation="Horizontal">
+				<Image Margin="5" Source="/Assets/SRWJEdit.ico" Width="15"/>
+				<TextBlock Margin="5" IsHitTestVisible="False" Text="{Binding $parent[Window].Title}"/>
+			</StackPanel>
+			<Menu DockPanel.Dock="Top">
+				<MenuItem Header="_File">
+					<MenuItem Header="_Open" Command="{Binding OpenFile}"/>
+					<MenuItem IsEnabled="{Binding fileLoaded}" Header="_Save (Overwrite)"/>
+					<MenuItem IsEnabled="{Binding fileLoaded}" Header="Save _As..."/>
+					<Separator/>
+					<MenuItem Name="Exit" Header="_Exit"/>
+				</MenuItem>
+				<MenuItem Header="_Edit" Items="{Binding EditorMenuItems}"/>
+				<MenuItem Header="Help" Name="HelpMenu">
+					<!--Todo: Add help menu stuff-->
+				</MenuItem>
+			</Menu>
+		</StackPanel>
+		<Panel>
+			<ExperimentalAcrylicBorder IsHitTestVisible="False">
+				<ExperimentalAcrylicBorder.Material>
+					<ExperimentalAcrylicMaterial
+						BackgroundSource="Digger"
+						TintColor="Black"
+						TintOpacity="1"
+						MaterialOpacity="0.65"/>
+				</ExperimentalAcrylicBorder.Material>
+			</ExperimentalAcrylicBorder>
+			<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+				<TextBlock Text="{Binding Greeting}"/>
+				<TextBlock Text="{Binding GameString}"/>
+			</StackPanel>
+		</Panel>
+
+	</DockPanel>
+
+</Window>
