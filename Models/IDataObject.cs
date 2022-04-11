@@ -9,5 +9,6 @@ namespace SRWJEditV.Models
     public interface IDataObject
     {
         public byte[] GetData();
+        public int Index { get; set; }
     }
 }

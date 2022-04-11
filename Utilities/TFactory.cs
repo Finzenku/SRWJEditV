@@ -35,7 +35,7 @@ namespace SRWJEditV.Utilities
                     paramType)).ToArray();
 
             // just call the constructor.
-            var body = Expression.New(constructorInfo, constructorParameters);
+            var body = Expression.New(constructorInfo!, constructorParameters);
 
             var constructor = Expression.Lambda<ConstructorDelegate>(body, paramExpr);
             return constructor.Compile();
