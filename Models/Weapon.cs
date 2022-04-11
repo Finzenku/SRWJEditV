@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace SRWJEditV.Models
 {
     [GameObject(initialAddress: 0xAB268, dataLength: 0x20, objectCount: 1469, pointerOffsets: new int[] { 0, 4 })]
-    public class Weapon : INameable
+    public class Weapon : INameable, IDataObject
     {
         public int Index { get; set; }
         public int NamePointer1 { get; set; }

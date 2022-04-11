@@ -21,6 +21,7 @@ namespace SRWJEditV.Utilities
         private Dictionary<Type, IList> modelLists;
         private Dictionary<Type, Dictionary<int, string>> stringLists;
         private SrwjReader sReader;
+        private SrwjWriter sWriter;
 
         private ModelHandler(string filePath)
         {
@@ -30,6 +31,7 @@ namespace SRWJEditV.Utilities
             enc = Encoding.GetEncoding(932);
             fs = new FileStream(filePath, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite);
             sReader = new SrwjReader(fs);
+            sWriter = new SrwjWriter(fs);
 
             List<Type> types = Assembly.GetExecutingAssembly().GetTypes().Where(t => t.GetCustomAttribute(typeof(GameObjectAttribute)) is not null).ToList();
             foreach (Type t in types)
@@ -95,6 +97,41 @@ namespace SRWJEditV.Utilities
                 dict = stringLists[t];
             return dict;
         }
+
+        public void SaveData()
+        {
+            List<Type> types = modelLists.Keys.ToList();
+            foreach (Type t in types)
+            {
+                GameObjectAttribute goa = (GameObjectAttribute)t.GetCustomAttribute(typeof(GameObjectAttribute))!;
+                int add = goa.InitialAddress;
+                int len = goa.DataLength;
+                int count = goa.ObjectCount;
+                List<IDataObject> dataObjs = modelLists[t].Cast<IDataObject>().ToList();
+                byte[] data = new byte[count * len];
+
+                if (dataObjs is not null)
+                {
+                    for (int i = 0; i < goa.ObjectCount; i++)
+                    {
+                        byte[] objData = dataObjs[i].GetData();
+                        Buffer.BlockCopy(objData, 0, data, i*len, objData.Length);
+                    }
+                    sWriter.WriteData(add, data);
+
+                    Dictionary<int, string> pointerDict = stringLists[t];
+                    foreach (KeyValuePair<int, string> kvp in pointerDict)
+                        sWriter.WriteString(kvp.Key & 0xFFFFFF, kvp.Value);
+                }
+            }
+        }
+        public void SaveAs(string filePath)
+        {
+            fs.Dispose();
+            fs = new FileStream(filePath, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite);
+            SaveData();
+        }
+
         public static void SetFilePath(string filePath)
         {
             Handler?.Dispose();

@@ -26,8 +26,8 @@
 			<Menu DockPanel.Dock="Top">
 				<MenuItem Header="_File">
 					<MenuItem Header="_Open" Command="{Binding OpenFile}"/>
-					<MenuItem IsEnabled="{Binding fileLoaded}" Header="_Save (Overwrite)"/>
-					<MenuItem IsEnabled="{Binding fileLoaded}" Header="Save _As..."/>
+					<MenuItem Name="Save" IsEnabled="{Binding fileLoaded}" Header="_Save (Overwrite)"/>
+					<MenuItem Name="SaveAs" IsEnabled="{Binding fileLoaded}" Header="Save _As..."/>
 					<Separator/>
 					<MenuItem Name="Exit" Header="_Exit"/>
 				</MenuItem>

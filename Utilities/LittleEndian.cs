@@ -35,16 +35,16 @@
 
         public static byte[] GetBytes(short value)
         {
-            return new byte[2] { (byte)(value & 0xFF), (byte)((value >> 2) & 0xFF) };
+            return new byte[2] { (byte)(value & 0xFF), (byte)((value >> 8) & 0xFF) };
         }
         public static byte[] GetBytes(int value)
         {
             return new byte[4]
             {
                 (byte)(value & 0xFF),
-                (byte)((value >> 2) & 0xFF),
-                (byte)((value >> 4) & 0xFF),
-                (byte)((value >> 6) & 0xFF),
+                (byte)((value >> 8) & 0xFF),
+                (byte)((value >> 16) & 0xFF),
+                (byte)((value >> 24) & 0xFF),
             };
         }
         public static byte[] GetBytes(long value)
@@ -52,13 +52,13 @@
             return new byte[8]
             {
                 (byte)(value & 0xFF),
-                (byte)((value >> 2) & 0xFF),
-                (byte)((value >> 4) & 0xFF),
-                (byte)((value >> 6) & 0xFF),
                 (byte)((value >> 8) & 0xFF),
-                (byte)((value >> 10) & 0xFF),
-                (byte)((value >> 12) & 0xFF),
-                (byte)((value >> 14) & 0xFF),
+                (byte)((value >> 16) & 0xFF),
+                (byte)((value >> 24) & 0xFF),
+                (byte)((value >> 32) & 0xFF),
+                (byte)((value >> 40) & 0xFF),
+                (byte)((value >> 48) & 0xFF),
+                (byte)((value >> 56) & 0xFF),
             };
         }
     }

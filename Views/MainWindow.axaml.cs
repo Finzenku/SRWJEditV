@@ -14,6 +14,7 @@ namespace SRWJEditV.Views
         {
             InitializeComponent();
             this.FindControl<MenuItem>("Exit").Command = ReactiveCommand.Create(() => Close());
+            this.FindControl<MenuItem>("Save").Command = ReactiveCommand.Create(() => ModelHandler.GetInstance()?.SaveData());
             this.WhenActivated(d => d(ViewModel!.EditorInteraction.RegisterHandler(DoShowPlugin)));
             this.WhenActivated(d => d(ViewModel!.OpenFileDialog.RegisterHandler(OpenFile)));
         }

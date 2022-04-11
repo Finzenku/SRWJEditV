@@ -140,10 +140,11 @@ namespace SRWJEditV.ViewModels
             //When the SelectedPointer changes, update the displayed WeaponName
             this.WhenAnyValue(x => x.SelectedPointer1).Subscribe(x =>
             {
-                if (x >= 0)
+                if (x >= 0 && SelectedIndex >= 0)
                 {
                     SelectedWeapon.NamePointer1 = PointerKeys[x];
-                    WeaponName1 = WeaponPointers[SelectedWeapon.NamePointer1];
+                    IndexedNamePointers[SelectedIndex] = SelectedWeapon.NamePointer1;
+                    WeaponName1 = WeaponPointers[SelectedWeapon.NamePointer1];                    
                 }
             });
             this.WhenAnyValue(x => x.SelectedPointer2).Subscribe(x =>
