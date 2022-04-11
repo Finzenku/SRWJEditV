@@ -43,10 +43,12 @@ namespace SRWJEditV.ViewModels
             foreach (Type t in viewModels)
             {
                 MenuItem menu = new() { Header = t.Name.Replace("ViewModel", "") };
+                var ctorWithHandler = TFactory.CreateConstructor(t, typeof(ModelHandler));
+                var ctorNoHandler = TFactory.CreateConstructor(t);
                 menu.Command = ReactiveCommand.Create(async () =>
                 {
                     var handler = ModelHandler.GetInstance();
-                    var result = handler is not null ? await HandlePlugin((ViewModelBase)TFactory.CreateObject(t, handler!)!) : await HandlePlugin((ViewModelBase)TFactory.CreateObject(t)!);
+                    var result = handler is not null ? await HandlePlugin((ViewModelBase)ctorWithHandler(handler)) : await HandlePlugin((ViewModelBase)ctorNoHandler());
                 });
                 EditorMenuItems.Add(menu);
             }

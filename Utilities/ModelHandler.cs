@@ -31,12 +31,13 @@ namespace SRWJEditV.Utilities
             fs = new FileStream(filePath, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite);
             sReader = new SrwjReader(fs);
 
-            List<Type> types = Assembly.GetExecutingAssembly().GetTypes().Where(t => t.GetCustomAttribute(typeof(GameObjectAttribute)) != null).ToList();
+            List<Type> types = Assembly.GetExecutingAssembly().GetTypes().Where(t => t.GetCustomAttribute(typeof(GameObjectAttribute)) is not null).ToList();
             foreach (Type t in types)
             {
                 IList? list = TFactory.CreateList(t);
+                var typeConstructor = TFactory.CreateConstructor(t, typeof(byte[]));
                 bool isNameable = t.GetInterface(nameof(INameable)) is not null;
-                if (list != null)
+                if (list is not null)
                 {
                     GameObjectAttribute goa = (GameObjectAttribute)t.GetCustomAttribute(typeof(GameObjectAttribute))!;
                     int add = goa.InitialAddress;
@@ -44,9 +45,9 @@ namespace SRWJEditV.Utilities
                     Dictionary<int, string> stringPointers = new();
                     for (int i = 0; i < goa.ObjectCount; i++)
                     {
-                        object? o = TFactory.CreateObject(t, sReader.ReadData(add + (i * len), len));
+                        object o = typeConstructor(sReader.ReadData(add + (i * len), len));
                         t.GetProperty("Index")?.SetValue(o, i);
-                        if (o != null)
+                        if (o is not null)
                         {
                             if (isNameable)
                             {

@@ -20,7 +20,7 @@ namespace SRWJEditV
                     DataContext = new MainWindowViewModel(
                         Assembly.GetExecutingAssembly()
                         .GetTypes()
-                        .Where(t => t.GetCustomAttribute(typeof(EditorViewModelAttribute)) != null)
+                        .Where(t => t.GetCustomAttribute(typeof(EditorViewModelAttribute)) is not null)
                         .ToList()) 
                 };
             base.OnFrameworkInitializationCompleted();

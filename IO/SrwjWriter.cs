@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using SRWJEditV.Utilities;
 
 namespace SRWJEditV.IO
 {
@@ -33,11 +29,6 @@ namespace SRWJEditV.IO
             bw.BaseStream.Position = address;
             bw.Write(enc.GetBytes(str));
             bw.Write((byte)0);
-        }
-
-        public void WriteObject<T>(T Model)
-        {
-
         }
 
         public void Dispose() => bw.Dispose();

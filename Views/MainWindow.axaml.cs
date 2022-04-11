@@ -19,8 +19,8 @@ namespace SRWJEditV.Views
         }
         private async Task DoShowPlugin(InteractionContext<ViewModelBase, Unit?> interaction)
         {
-            Window win = (Window)new ViewLocator().Build(interaction.Input);
-            if (win is not null)
+            IControl control = new ViewLocator().Build(interaction.Input);
+            if (control is Window win)
             {
                 win.DataContext = interaction.Input;
                 var result = await win.ShowDialog<Unit?>(this);

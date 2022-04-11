@@ -38,7 +38,6 @@ namespace SRWJEditV.ViewModels
         [Reactive] public string WeaponName2 { get; set; }
         [Reactive] public int MaxName1 { get; set; }
         [Reactive] public int MaxName2 { get; set; }
-        [Reactive] public Avalonia.Vector ScrollOffset { get; set; }
         [Reactive] public byte BulletTypeIndex { get; set; }      
         [Reactive] public int WeaponTypeIndex { get; set; }
 

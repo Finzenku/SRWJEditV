@@ -2,35 +2,45 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SRWJEditV.Utilities
 {
     public static class TFactory
     {
-        public static object? CreateObject(Type T, object[] args)
-        {
-            Type[] types = new Type[args.Length];
-            for (int i = 0; i < args.Length; i++)
-            {
-                types[i] = args[i].GetType();
-            }
-            ConstructorInfo? c = T.GetConstructor(types);
-            return c != null ? c.Invoke(args) : null;
-        }
-        public static T? CreateObject<T>(object[] args) => (T?)CreateObject(typeof(T), args);
+        //Express Tree from Jeroen van Langen at https://stackoverflow.com/a/39961349
+        //Performs ~8x faster than ConstructorInfo and ~20x faster than Activator
+        //Only have to CreateConstructor once per type rather than once per object
 
-        public static object? CreateObject(Type T, object arg)
+        // this delegate is just, so you don't have to pass an object array. _(params)_
+        public delegate object ConstructorDelegate(params object[] args);
+        public static ConstructorDelegate CreateConstructor(Type type, params Type[] parameters)
         {
-            ConstructorInfo? c = T.GetConstructor(new Type[] { arg.GetType() });
-            return c != null ? c.Invoke(new object[] { arg }) : null;
-        }
-        public static T? CreateObject<T>(object arg) => (T?)CreateObject(typeof(T), arg);
+            // Get the constructor info for these parameters
+            var constructorInfo = type.GetConstructor(parameters);
 
-        public static object? CreateObject(Type T) => Assembly.GetExecutingAssembly().CreateInstance(T.FullName!);
-        public static T? CreateObject<T>() => (T?)CreateObject(typeof(T));
+            // define a object[] parameter
+            var paramExpr = Expression.Parameter(typeof(Object[]));
+
+            // To feed the constructor with the right parameters, we need to generate an array 
+            // of parameters that will be read from the initialize object array argument.
+            var constructorParameters = parameters.Select((paramType, index) =>
+                // convert the object[index] to the right constructor parameter type.
+                Expression.Convert(
+                    // read a value from the object[index]
+                    Expression.ArrayAccess(
+                        paramExpr,
+                        Expression.Constant(index)),
+                    paramType)).ToArray();
+
+            // just call the constructor.
+            var body = Expression.New(constructorInfo, constructorParameters);
+
+            var constructor = Expression.Lambda<ConstructorDelegate>(body, paramExpr);
+            return constructor.Compile();
+        }
+
 
         public static IList? CreateList(Type myType) => (IList?)Activator.CreateInstance(typeof(List<>).MakeGenericType(myType));
     }
