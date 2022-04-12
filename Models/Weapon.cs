@@ -15,8 +15,8 @@ namespace SRWJEditV.Models
         public int NamePointer1 { get; set; }
         public int NamePointer2 { get; set; }
         public byte Flag { get; set; }
-        public byte NeededSkill { get; set; }
-        public byte EnabledTerm { get; set; }
+        public byte RequiredSkill { get; set; }
+        public byte UseConditions { get; set; }
         public byte Characteristic { get; set; }
         public short Attack { get; set; }
         public byte Energy { get; set; }
@@ -27,11 +27,11 @@ namespace SRWJEditV.Models
         public byte BGM { get; set; }
         public sbyte MaximumRange { get; set; }
         public sbyte MinimumRange { get; set; }
-        public byte UnitGroupOfUnion { get; set; }
-        public byte PilotGroupOfUnion { get; set; }
-        public byte SpecialEffecive { get; set; }
+        public byte UnitGroupCombo { get; set; }
+        public byte PilotGroupCombo { get; set; }
+        public byte AddedEffect { get; set; }
         public byte BulletFlag { get; set; }
-        public byte RaisedPoint { get; set; }
+        public byte AttackUpgrade { get; set; }
         public byte AdaptationSky { get; set; }
         public byte AdaptationLand { get; set; }
         public byte AdaptationSea { get; set; }
@@ -40,14 +40,16 @@ namespace SRWJEditV.Models
 
         public Weapon()
         {
+            AddedEffect = 6;
+            BGM = 6;
         }
         public Weapon(byte[] weaponData)
         {
             NamePointer1 = LittleEndian.GetInt32(weaponData.Take<byte>(4).ToArray());
             NamePointer2 = LittleEndian.GetInt32(weaponData.Take<byte>(new Range(4, 8)).ToArray());
             Flag = weaponData[8];
-            NeededSkill = weaponData[9];
-            EnabledTerm = weaponData[10];
+            RequiredSkill = weaponData[9];
+            UseConditions = weaponData[10];
             Characteristic = weaponData[11];
             Attack = LittleEndian.GetInt16(new byte[] { weaponData[12], weaponData[13] });
             Energy = weaponData[14];
@@ -58,11 +60,11 @@ namespace SRWJEditV.Models
             BGM = weaponData[19];
             MaximumRange = (sbyte)weaponData[20];
             MinimumRange = (sbyte)weaponData[21];
-            UnitGroupOfUnion = weaponData[22];
-            PilotGroupOfUnion = weaponData[23];
-            SpecialEffecive = weaponData[24];
+            UnitGroupCombo = weaponData[22];
+            PilotGroupCombo = weaponData[23];
+            AddedEffect = weaponData[24];
             BulletFlag = weaponData[25];
-            RaisedPoint = weaponData[26];
+            AttackUpgrade = weaponData[26];
             AdaptationSky = weaponData[27];
             AdaptationLand = weaponData[28];
             AdaptationSea = weaponData[29];
@@ -77,11 +79,11 @@ namespace SRWJEditV.Models
             {
                 p1[0], p1[1], p1[2], p1[3],
                 p2[0], p2[1], p2[2], p2[3],
-                Flag, NeededSkill, EnabledTerm, Characteristic,
+                Flag, RequiredSkill, UseConditions, Characteristic,
                 atk[0], atk[1], Energy, (byte)Hit,
                 (byte)Critical, Bullet, Spirit, BGM,
-                (byte)MaximumRange, (byte)MinimumRange, UnitGroupOfUnion, PilotGroupOfUnion,
-                SpecialEffecive, BulletFlag, RaisedPoint, AdaptationSky,
+                (byte)MaximumRange, (byte)MinimumRange, UnitGroupCombo, PilotGroupCombo,
+                AddedEffect, BulletFlag, AttackUpgrade, AdaptationSky,
                 AdaptationLand, AdaptationSea, AdaptationCosmos, Unknown,
             };
         }

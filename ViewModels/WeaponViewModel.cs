@@ -27,9 +27,11 @@ namespace SRWJEditV.ViewModels
 
         [Reactive] public ObservableCollection<string> WeaponNames { get; set; }
         [Reactive] public ObservableCollection<KeyValuePair<int, string>> ObservablePointers { get; set; }
-        [Reactive] public ObservableCollection<string> BulletTypes { get; set; }
         [Reactive] public BindingList<ObservablePair<bool, string>> WeaponTypes { get; set; }
         [Reactive] public BindingList<ObservablePair<bool, string>> WeaponChars { get; set; }
+        [Reactive] public List<string> BulletTypes { get; set; }
+        [Reactive] public List<string> Effectiveness { get; set; }
+        [Reactive] public List<string> SpecialEffects { get; set; }
         [Reactive] public int SelectedPointer1 { get; set; }
         [Reactive] public int SelectedPointer2 { get; set; }
         [Reactive] public Weapon SelectedWeapon { get; set; }
@@ -38,7 +40,7 @@ namespace SRWJEditV.ViewModels
         [Reactive] public string WeaponName2 { get; set; }
         [Reactive] public int MaxName1 { get; set; }
         [Reactive] public int MaxName2 { get; set; }
-        [Reactive] public byte BulletTypeIndex { get; set; }      
+        [Reactive] public byte BulletTypeIndex { get; set; }
         [Reactive] public int WeaponTypeIndex { get; set; }
 
         public WeaponViewModel()
@@ -68,6 +70,23 @@ namespace SRWJEditV.ViewModels
                 "N/A"//No bullets 
             };
             BulletTypeIndex = 0;
+            Effectiveness = new()
+            {
+                "N/A",
+                "B",
+                "A",
+                "S"
+            };
+            SpecialEffects = new()
+            {
+                "Halved movment next turn",
+                "30% reduced armor next turn",
+                "Halved mobility next turn",
+                "Weapon power halved next turn",
+                "Target EN to 0",
+                "Target EN-10 SP-30",
+                "No effect",
+            };
             WeaponTypes = new() 
             { 
                 new ObservablePair<bool, string>(false, "Melee Weapon"),

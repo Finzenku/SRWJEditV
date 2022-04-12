@@ -7,8 +7,8 @@
         x:Class="SRWJEditV.Views.WeaponView"
         Title="Weapon Editor"
 		WindowStartupLocation="CenterOwner"
-		Width="850"
-		Height="550"
+		Width="860"
+		Height="620"
 		ExtendClientAreaToDecorationsHint="True"
 		FontFamily="ヒラギノ角ゴ Pro W3, Hiragino Kaku Gothic Pro, Osaka, メイリオ, Meiryo, ＭＳ Ｐゴシック, MS PGothic, MS Mincho, sans-serif">
 	<Design.DataContext>
@@ -36,7 +36,7 @@
 				<StackPanel Orientation="Vertical" DockPanel.Dock="Left" HorizontalAlignment="Left" Margin="10,0,0,0">
 					<TextBlock FontSize="14" Margin="8,0,0,3">Weapons:</TextBlock>
 
-					<ListBox Width="250" Height="300"
+					<ListBox Width="250" Height="340"
 							 VerticalAlignment="Top"
 							 Items="{Binding WeaponNames}" SelectedIndex="{Binding SelectedIndex}"
 							 ScrollViewer.VerticalScrollBarVisibility="Visible">
@@ -103,7 +103,7 @@
 						</ComboBox>
 					</StackPanel>
 					<!--Attack -->
-					<StackPanel Orientation="Horizontal">
+					<StackPanel Orientation="Horizontal" Margin="0,5,0,0">
 						<TextBlock Width="60" Margin="0,5,0,0" Text="Attack:"/>
 						<NumericUpDown ShowButtonSpinner="False" Maximum="32767" Minimum="-32768" Increment="100" Value="{Binding SelectedWeapon.Attack}" Width="90"/>
 					</StackPanel>
@@ -131,16 +131,44 @@
 					<!--Bullet Flag / Bullets-->
 					<StackPanel Orientation="Horizontal">
 						<TextBlock Width="80" Margin="0,5,0,0" Text="Bullet Type:"/>
-						<ComboBox Items="{Binding BulletTypes}"  SelectedIndex="{Binding BulletTypeIndex}" Width="70">
-						</ComboBox>
+						<ComboBox Items="{Binding BulletTypes}"  SelectedIndex="{Binding BulletTypeIndex}" Width="70"/>
 						<TextBlock Width="80" Margin="10,5,0,0" Text="Bullets:"/>
 						<NumericUpDown ShowButtonSpinner="False" Maximum="255" Minimum="0" Increment="1" Value="{Binding SelectedWeapon.Bullet}" Width="70"/>
 					</StackPanel>
+					<StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+						<TextBlock Width="240" Margin="0,5,0,0" Text="Unit Group for combined attack:"/>
+						<NumericUpDown ShowButtonSpinner="False" Maximum="255" Minimum="0" Increment="1" Value="{Binding SelectedWeapon.UnitGroupCombo}" Width="70"/>
+					</StackPanel>
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Width="240" Margin="0,5,0,0" Text="Pilot Group for combined attack:"/>
+						<NumericUpDown ShowButtonSpinner="False" Maximum="255" Minimum="0" Increment="1" Value="{Binding SelectedWeapon.PilotGroupCombo}" Width="70"/>
+					</StackPanel>
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Width="240" Margin="0,5,0,0" Text="Required Skills:"/>
+						<NumericUpDown ShowButtonSpinner="False" Maximum="255" Minimum="0" Increment="1" Value="{Binding SelectedWeapon.RequiredSkill}" Width="70"/>
+					</StackPanel>
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Width="240" Margin="0,5,0,0" Text="Usable conditions:"/>
+						<NumericUpDown ShowButtonSpinner="False" Maximum="255" Minimum="0" Increment="1" Value="{Binding SelectedWeapon.UseConditions}" Width="70"/>
+					</StackPanel>
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Width="240" Margin="0,5,0,0" Text="Attack increase per upgrade:"/>
+						<NumericUpDown ShowButtonSpinner="False" Maximum="255" Minimum="0" Increment="1" Value="{Binding SelectedWeapon.AttackUpgrade}" Width="70"/>
+					</StackPanel>
+					<StackPanel Orientation="Horizontal" Margin="0,3,0,0">
+						<TextBlock Width="130" Margin="0,5,0,0" Text="Additional effect:"/>
+						<ComboBox Items="{Binding SpecialEffects}"  SelectedIndex="{Binding SelectedWeapon.AddedEffect}" Width="180"/>
+					</StackPanel>
+					<StackPanel Orientation="Horizontal" Margin="0,3,0,0">
+						<TextBlock Width="60" Margin="0,5,0,0" Text="BGM:"/>
+						<NumericUpDown ShowButtonSpinner="False" Maximum="255" Minimum="0" Increment="1" Value="{Binding SelectedWeapon.AddedEffect}" Width="250"/>
+					</StackPanel>
 				</StackPanel>
+				
 				<!--Flags/Checkboxes-->
 				<StackPanel VerticalAlignment="Top" Margin="0,0,0,0">
 					<TextBlock FontSize="14" Margin="15,0,0,3">Weapon Flags:</TextBlock>
-					<ListBox Height="215" Width="210" Items="{Binding WeaponTypes}" SelectedIndex="{Binding WeaponTypeIndex}" Padding="0,3,0,0">
+					<ListBox Height="215" Width="250" Items="{Binding WeaponTypes}" SelectedIndex="{Binding WeaponTypeIndex}" Padding="0,3,0,0" Margin="5,0,0,0">
 						<ListBox.ItemTemplate>
 							<DataTemplate>
 								<StackPanel Orientation="Horizontal" Margin="10,-3,0,-3">
@@ -156,8 +184,8 @@
 							</Style>
 						</ListBox.Styles>
 					</ListBox>
-					<TextBlock FontSize="14" Margin="15,0,0,3">Weapon Characteristics:</TextBlock>
-					<ListBox Height="215" Width="210" Items="{Binding WeaponChars}" SelectedIndex="{Binding WeaponTypeIndex}" Padding="0,3,0,0">
+					<TextBlock FontSize="14" Margin="15,5,0,3">Weapon Characteristics:</TextBlock>
+					<ListBox Height="215" Width="250" Items="{Binding WeaponChars}" SelectedIndex="{Binding WeaponTypeIndex}" Padding="0,3,0,0" Margin="5,0,0,0">
 						<ListBox.ItemTemplate>
 							<DataTemplate>
 								<StackPanel Orientation="Horizontal" Margin="10,-3,0,-3">
@@ -173,6 +201,19 @@
 							</Style>
 						</ListBox.Styles>
 					</ListBox>
+					<TextBlock Margin="15,5,0,-3" Text="Effectiveness"/>
+					<StackPanel Margin="20,0,0,0" Orientation="Horizontal">
+						<TextBlock Margin="0,5,0,0" Width="40">Sky:</TextBlock>
+						<ComboBox Items="{Binding Effectiveness}" SelectedIndex="{Binding SelectedWeapon.AdaptationSky}" Width="70"/>
+						<TextBlock Margin="5,5,0,0" Width="60">Land:</TextBlock>
+						<ComboBox Items="{Binding Effectiveness}" SelectedIndex="{Binding SelectedWeapon.AdaptationLand}" Width="70"/>
+					</StackPanel>
+					<StackPanel Margin="20,0,0,0" Orientation="Horizontal">
+						<TextBlock Margin="0,5,0,0" Width="40">Sea:</TextBlock>
+						<ComboBox Items="{Binding Effectiveness}" SelectedIndex="{Binding SelectedWeapon.AdaptationSea}" Width="70"/>
+						<TextBlock Margin="5,5,0,0" Width="60">Cosmos:</TextBlock>
+						<ComboBox Items="{Binding Effectiveness}" SelectedIndex="{Binding SelectedWeapon.AdaptationCosmos}" Width="70"/>
+					</StackPanel>
 				</StackPanel>
 			</DockPanel>
 		</Panel>
