@@ -12,6 +12,7 @@ namespace SRWJEditV.IO
     {
         private FileStream fs;
         private Encoding enc;
+        private int bitwise = 0xFFFFFF;
         
         public SrwjWriter(FileStream fileStream)
         {
@@ -43,8 +44,8 @@ namespace SRWJEditV.IO
         public void WriteString(int address, string str)
         {
             fs.Position = address;
-            fs.Write(enc.GetBytes(str));
-            fs.Write(new byte[1] { 0 });
+            fs.Write(enc.GetBytes(str)); 
+            WriteEmptyByte();
         }
 
         public void WriteStringDictionary(Dictionary<int, string> dict)
@@ -55,22 +56,27 @@ namespace SRWJEditV.IO
             int size = orderedKeys[count-1] - firstAdd + enc.GetByteCount(dict[orderedKeys.Last()]);
             byte[] data = new byte[size];
             byte[] strBytes;
-            int key = 0;
+            int key = 0, next = 0;
+            int oldOff = firstAdd, newOff = 0;
             int extraBytes = 0;
             for (int i = 0; i < count - 1; i++)
             {
                 key = orderedKeys[i];
                 strBytes = enc.GetBytes(dict[key]);
                 Buffer.BlockCopy(strBytes, 0, data, key - firstAdd, strBytes.Length);
-                extraBytes = (orderedKeys[i + 1] - orderedKeys[i]) - strBytes.Length;
-                if (extraBytes > 0)
-                    Buffer.BlockCopy(new byte[extraBytes], 0, data, (key - firstAdd) + strBytes.Length, extraBytes);
+                extraBytes = (orderedKeys[i + 1] - key) - strBytes.Length;
+                newOff = key + strBytes.Length;
+                next = newOff - oldOff;
+                if (extraBytes > 5 || i == count - 2)
+                {
+                    WriteData(oldOff & bitwise, data[(oldOff-firstAdd)..(newOff-firstAdd)]);
+                    if (newOff-firstAdd < data.Length -1)
+                        WriteEmptyByte();
+                    oldOff = orderedKeys[i + 1];
+                }
             }
-            strBytes = enc.GetBytes(dict[orderedKeys[count-1]]);
-            Buffer.BlockCopy(strBytes, 0, data, orderedKeys[count-1] - orderedKeys[0], strBytes.Length);
-
-            WriteData(firstAdd & 0xFFFFFF, data);
-
         }
+
+        private void WriteEmptyByte() => fs.Write(new byte[1] { 0 });
     }
 }

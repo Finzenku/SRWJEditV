@@ -15,6 +15,7 @@ namespace SRWJEditV.IO
     {
         private FileStream fs;
         private Encoding enc;
+        private int bitwise = 0xFFFFFF;
         
         public SrwjReader(FileStream fileStream)
         {
@@ -80,28 +81,31 @@ namespace SRWJEditV.IO
             addresses = addresses.Distinct().OrderBy(x => x).ToList();
             int count = addresses.Count;
 
-            List<string> strings = GetStringsFromBytes(ReadData(addresses[0] & 0xFFFFFF, addresses[count - 1] - addresses[0]));
-            for (int i = 0; i < strings.Count; i++)
-                dict.Add(addresses[i], strings[i]);
-            dict.Add(addresses[count-1], ReadString(addresses[count-1]));
-
-            return dict;
-        }
-        private List<string> GetStringsFromBytes(byte[] data)
-        {
-            List<string> list = new();
+            byte[] data = ReadData(addresses[0] & bitwise, addresses[count - 1] - addresses[0]);
+            int start = addresses[0];
+            int offset = 0;
+            byte b;
             List<byte> strData = new();
-            for (int i = 0; i < data.Length; i++)
+            for (int i = 0; i < addresses.Count - 1; i++)
             {
-                if (data[i] != 0)
-                    strData.Add(data[i]);
-                else if (strData.Count > 0)
+                if (!dict.ContainsKey(addresses[i]))
                 {
-                    list.Add(enc.GetString(strData.ToArray()));
+                    offset = addresses[i] - start;
+                    while (offset < data.Length && (b = data[offset]) != 0)
+                    {
+                        strData.Add(b);
+                        offset++;
+                    }
+                    if (strData.Count > 0)
+                        dict.Add(addresses[i], enc.GetString(strData.ToArray()));
                     strData.Clear();
                 }
             }
-            return list;
+            int last = addresses[addresses.Count-1];
+            if (!dict.ContainsKey(last))
+                dict.Add(last, ReadString(last & bitwise));
+
+            return dict;
         }
     }
 }
