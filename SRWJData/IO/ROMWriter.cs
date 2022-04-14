@@ -46,7 +46,7 @@ namespace SRWJData.IO
             WriteEmptyByte();
         }
 
-        public void WriteStringDictionary(Dictionary<int, string> dict)
+        public void WriteStringDictionary(SortedDictionary<int, string> dict)
         {
             using (fs = new FileStream(_filePath, FileMode.Open, FileAccess.Write, FileShare.ReadWrite))
             {

@@ -3,7 +3,7 @@
     public static class DataHandlers
     {
         private static IModelHandler? modelHandler;
-        public static void UseROMHandlers(string filePath)
+        public static void UseROMHandler(string filePath)
         {
             if (modelHandler != null && modelHandler is ROMModelHandler)
                 ((ROMModelHandler)modelHandler).SetFilePath(filePath);

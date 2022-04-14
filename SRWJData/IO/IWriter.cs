@@ -6,6 +6,6 @@ namespace SRWJData.IO
     public interface IWriter : IDisposable
     {
         void WriteDataObjects(IList<IDataObject> objects, GameObjectAttribute goa);
-        void WriteStringDictionary(Dictionary<int, string> dict);
+        void WriteStringDictionary(SortedDictionary<int, string> dict);
     }
 }

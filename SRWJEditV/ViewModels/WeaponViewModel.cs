@@ -19,7 +19,7 @@ namespace SRWJEditV.ViewModels
     {
         private List<WeaponModel> Weapons { get; }
         private Dictionary<int, int> IndexedNamePointers;
-        private Dictionary<int, string> WeaponPointers;
+        private SortedDictionary<int, string> WeaponPointers;
         private List<int> PointerKeys;
 
         [Reactive] public ObservableCollection<string> WeaponNames { get; set; }

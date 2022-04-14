@@ -31,7 +31,7 @@ namespace SRWJEditV.ViewModels
                 var fileLoc = await OpenFileDialog.Handle(new Unit());
                 if (fileLoc is not null)
                 {
-                    DataHandlers.UseROMHandlers(fileLoc);
+                    DataHandlers.UseROMHandler(fileLoc);
                     fileLoaded = true;
                 }
                 else fileLoaded = false;

@@ -3,6 +3,6 @@
     public interface IModelHandler
     {
         List<T> GetList<T>();
-        Dictionary<int, string> GetPointerDictionary<T>();
+        SortedDictionary<int, string> GetPointerDictionary<T>();
     }
 }

@@ -67,9 +67,9 @@ namespace SRWJData.IO
             return list;
         }
 
-        public Dictionary<int, string> GetNamePointers(List<INameable> nameables)
+        public SortedDictionary<int, string> GetNamePointers(List<INameable> nameables)
         {
-            Dictionary<int, string> dict = new();
+            SortedDictionary<int, string> dict = new();
             List<int> addresses = new();
 
             foreach (INameable named in nameables)

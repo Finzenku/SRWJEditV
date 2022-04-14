@@ -12,7 +12,7 @@ namespace SRWJData.DataHandlers
         private List<Type> _types;
         private Encoding enc;
         private Dictionary<Type, IList<IDataObject>> modelLists;
-        private Dictionary<Type, Dictionary<int, string>> stringLists;
+        private Dictionary<Type, SortedDictionary<int, string>> stringLists;
         private ROMReader sReader;
         private ROMWriter sWriter;
         private string _filePath;
@@ -23,7 +23,7 @@ namespace SRWJData.DataHandlers
             _filePath = filePath;
             stringMemoryOffset = 0x08000000;
             modelLists = new Dictionary<Type, IList<IDataObject>>();
-            stringLists = new Dictionary<Type, Dictionary<int, string>>();
+            stringLists = new Dictionary<Type, SortedDictionary<int, string>>();
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             enc = Encoding.GetEncoding(932);
 
@@ -39,7 +39,7 @@ namespace SRWJData.DataHandlers
                         modelLists.Add(t, list);
                         if (t.GetInterface(nameof(INameable)) is not null)
                         {
-                            Dictionary<int, string> stringPointers = sReader.GetNamePointers(list.Cast<INameable>().ToList());
+                            SortedDictionary<int, string> stringPointers = sReader.GetNamePointers(list.Cast<INameable>().ToList());
                             int last = stringPointers.Last().Key;
                             stringPointers.Add(last + stringPointers.GetStringByteLimit(last) + 1, string.Empty);
                             stringLists.Add(t, stringPointers);
@@ -58,10 +58,10 @@ namespace SRWJData.DataHandlers
             return l;
         }
 
-        public Dictionary<int, string> GetPointerDictionary<T>()
+        public SortedDictionary<int, string> GetPointerDictionary<T>()
         {
             Type t = typeof(T);
-            Dictionary<int, string> dict = new();
+            SortedDictionary<int, string> dict = new();
             if (stringLists.ContainsKey(t))
                 dict = stringLists[t];
             return dict;
