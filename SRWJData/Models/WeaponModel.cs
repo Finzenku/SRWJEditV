@@ -1,15 +1,10 @@
-﻿using SRWJEditV.Attributes;
-using SRWJEditV.Utilities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SRWJData.Attributes;
+using SRWJData.Utilities;
 
-namespace SRWJEditV.Models
+namespace SRWJData.Models
 {
     [GameObject(initialAddress: 0xAB268, dataLength: 0x20, objectCount: 1469, pointerOffsets: new int[] { 0, 4 })]
-    public class Weapon : INameable, IDataObject
+    public class WeaponModel : INameable, IDataObject
     {
         public int Index { get; set; }
         public int NamePointer1 { get; set; }
@@ -38,12 +33,12 @@ namespace SRWJEditV.Models
         public byte AdaptationCosmos { get; set; }
         public byte Unknown { get; set; }
 
-        public Weapon()
+        public WeaponModel()
         {
             AddedEffect = 6;
             BGM = 6;
         }
-        public Weapon(byte[] weaponData)
+        public WeaponModel(byte[] weaponData)
         {
             NamePointer1 = LittleEndian.GetInt32(weaponData.Take<byte>(4).ToArray());
             NamePointer2 = LittleEndian.GetInt32(weaponData.Take<byte>(new Range(4, 8)).ToArray());

@@ -1,35 +1,31 @@
-﻿using SRWJEditV.Attributes;
-using SRWJEditV.Models;
-using SRWJEditV.Utilities;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using SRWJData.Utilities;
+using SRWJData.Attributes;
+using SRWJData.Models;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace SRWJEditV.IO
+namespace SRWJData.IO
 {
-    public class SrwjReader
+    public class ROMReader : IReader
     {
         private FileStream fs;
         private Encoding enc;
-        private int bitwise = 0xFFFFFF;
-        
-        public SrwjReader(FileStream fileStream)
+        private int strOffset;
+        private string _filePath;
+
+        public ROMReader(string filePath, Encoding encoding, int stringAdrOffset)
         {
-            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-            enc = Encoding.GetEncoding(932);
-            fs = fileStream;
+            enc = encoding;
+            strOffset = stringAdrOffset;
+            _filePath = filePath;
+            fs = new FileStream(_filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
         }
-        public string ReadStringFromPointer(int pointerAddress)
+        private string ReadStringFromPointer(int pointerAddress)
         {
             int pointer = LittleEndian.GetInt32(ReadData(pointerAddress, 4));
             return ReadString(pointer);
         }
 
-        public string ReadString(int address)
+        private string ReadString(int address)
         {
             fs.Position = address;
             return ReadNullTerminatedString();
@@ -43,7 +39,7 @@ namespace SRWJEditV.IO
             return enc.GetString(data.ToArray());
         }
 
-        public byte[] ReadData(int address, int length)
+        private byte[] ReadData(int address, int length)
         {
             byte[] data = new byte[length];
             fs.Position = address;
@@ -51,7 +47,7 @@ namespace SRWJEditV.IO
             return data;
         }
 
-        public IList<IDataObject>? ReadDataObjects(Type t, GameObjectAttribute goa)
+        public IList<IDataObject>? GetDataModels(Type t, GameObjectAttribute goa)
         {
             IList<IDataObject>? list = TFactory.CreateList(t)!.Cast<IDataObject>().ToList();
             if (list is not null)
@@ -81,7 +77,7 @@ namespace SRWJEditV.IO
             addresses = addresses.Distinct().OrderBy(x => x).ToList();
             int count = addresses.Count;
 
-            byte[] data = ReadData(addresses[0] & bitwise, addresses[count - 1] - addresses[0]);
+            byte[] data = ReadData(addresses[0] - strOffset, addresses[count - 1] - addresses[0]);
             int start = addresses[0];
             int offset = 0;
             byte b;
@@ -103,9 +99,14 @@ namespace SRWJEditV.IO
             }
             int last = addresses[addresses.Count-1];
             if (!dict.ContainsKey(last))
-                dict.Add(last, ReadString(last & bitwise));
+                dict.Add(last, ReadString(last - strOffset));
 
             return dict;
+        }
+
+        public void Dispose()
+        {
+            fs.Dispose();
         }
     }
 }

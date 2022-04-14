@@ -1,4 +1,4 @@
-﻿namespace SRWJEditV.Utilities
+﻿namespace SRWJData.Utilities
 {
     public static class LittleEndian
     {

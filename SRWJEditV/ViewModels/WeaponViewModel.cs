@@ -1,26 +1,23 @@
-﻿using Avalonia.Controls;
-using SRWJEditV.Models;
-using SRWJEditV.Utilities;
+﻿using SRWJEditV.Models;
 using SRWJEditV.Extensions;
 using ReactiveUI.Fody.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Reactive;
-using System.Windows.Input;
 using ReactiveUI;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using SRWJEditV.Attributes;
+using SRWJData.Extensions;
+using SRWJData.DataHandlers;
+using SRWJData.Models;
 
 namespace SRWJEditV.ViewModels
 {
     [EditorViewModel]
     public class WeaponViewModel : ViewModelBase
     {
-        private List<Weapon> Weapons { get; }
+        private List<WeaponModel> Weapons { get; }
         private Dictionary<int, int> IndexedNamePointers;
         private Dictionary<int, string> WeaponPointers;
         private List<int> PointerKeys;
@@ -34,7 +31,7 @@ namespace SRWJEditV.ViewModels
         [Reactive] public List<string> SpecialEffects { get; set; }
         [Reactive] public int SelectedPointer1 { get; set; }
         [Reactive] public int SelectedPointer2 { get; set; }
-        [Reactive] public Weapon SelectedWeapon { get; set; }
+        [Reactive] public WeaponModel SelectedWeapon { get; set; }
         [Reactive] public int SelectedIndex { get; set; }
         [Reactive] public string WeaponName1 { get; set; }
         [Reactive] public string WeaponName2 { get; set; }
@@ -114,10 +111,10 @@ namespace SRWJEditV.ViewModels
         }
 
 
-        public WeaponViewModel(ModelHandler mh) : this()
+        public WeaponViewModel(IModelHandler modelHandler) : this()
         {
-            Weapons = mh.GetList<Weapon>();            
-            WeaponPointers = mh.GetPointerDictionary<Weapon>();
+            Weapons = modelHandler.GetList<WeaponModel>();            
+            WeaponPointers = modelHandler.GetPointerDictionary<WeaponModel>();
             PointerKeys = WeaponPointers.Keys.ToList();
             ResetWeaponList();
             ResetFakePointers();

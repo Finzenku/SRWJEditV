@@ -1,4 +1,4 @@
-﻿namespace SRWJEditV.Models
+﻿namespace SRWJData.Models
 {
     public interface INameable
     {
