@@ -1,5 +1,6 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:np="https://np.com/visuals"
              xmlns:local="using:SRWJEditV"
              x:Class="SRWJEditV.App">
     <Application.DataTemplates>
@@ -9,4 +10,20 @@
     <Application.Styles>
         <FluentTheme Mode="Dark"/>
     </Application.Styles>
+	
+	<Application.Resources>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<!--Nick Polyak's NP.Avalonia.Visuals Localization, Internationalization and Theming-->
+				<!--https://www.codeproject.com/Articles/5317972/Theming-and-Localization-functionality-for-Multipl-->
+				<np:ThemeLoader Name="LanguageLoader"
+								SelectedThemeId="English (en-US)">
+					<np:ThemeInfo Id="English (en-US)"
+								  ResourceUrl="/LanguageDictionaries/EnglishDictionary.axaml"/>
+					<np:ThemeInfo Id="日本語 (ja-JP)"
+								  ResourceUrl="/LanguageDictionaries/JapaneseDictionary.axaml"/>
+				</np:ThemeLoader>
+			</ResourceDictionary.MergedDictionaries>
+		</ResourceDictionary>
+	</Application.Resources>
 </Application>

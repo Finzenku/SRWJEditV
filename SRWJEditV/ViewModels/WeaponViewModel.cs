@@ -1,12 +1,9 @@
-﻿using SRWJEditV.Models;
-using SRWJEditV.Extensions;
-using ReactiveUI.Fody.Helpers;
+﻿using ReactiveUI.Fody.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using ReactiveUI;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using SRWJEditV.Attributes;
 using SRWJData.Extensions;
 using SRWJData.DataHandlers;
@@ -24,11 +21,6 @@ namespace SRWJEditV.ViewModels
 
         [Reactive] public ObservableCollection<string> WeaponNames { get; set; }
         [Reactive] public ObservableCollection<KeyValuePair<int, string>> ObservablePointers { get; set; }
-        [Reactive] public BindingList<ObservablePair<bool, string>> WeaponTypes { get; set; }
-        [Reactive] public BindingList<ObservablePair<bool, string>> WeaponChars { get; set; }
-        [Reactive] public List<string> BulletTypes { get; set; }
-        [Reactive] public List<string> Effectiveness { get; set; }
-        [Reactive] public List<string> SpecialEffects { get; set; }
         [Reactive] public int SelectedPointer1 { get; set; }
         [Reactive] public int SelectedPointer2 { get; set; }
         [Reactive] public WeaponModel SelectedWeapon { get; set; }
@@ -52,60 +44,7 @@ namespace SRWJEditV.ViewModels
             SelectedIndex = 0;
             WeaponName1 =string.Empty;
             WeaponName2=string.Empty;
-
-            //Todo: Find out what each bullet type does
-            BulletTypes = new() 
-            { 
-                "0", 
-                "1", 
-                "2", 
-                "3", 
-                "4", 
-                "5", 
-                "6", 
-                "7", 
-                "N/A"//No bullets 
-            };
             BulletTypeIndex = 0;
-            Effectiveness = new()
-            {
-                "N/A",
-                "B",
-                "A",
-                "S"
-            };
-            SpecialEffects = new()
-            {
-                "Halved movment next turn",
-                "30% reduced armor next turn",
-                "Halved mobility next turn",
-                "Weapon power halved next turn",
-                "Target EN to 0",
-                "Target EN-10 SP-30",
-                "No effect",
-            };
-            WeaponTypes = new() 
-            { 
-                new ObservablePair<bool, string>(false, "Melee Weapon"),
-                new ObservablePair<bool, string>(false, "Shooting Weapon"),
-                new ObservablePair<bool, string>(false, "Post-Movement Weapon (P)"),
-                new ObservablePair<bool, string>(false, "Beam Weapon (B)"),
-                new ObservablePair<bool, string>(false, "MAP Weapon (M)"),
-                new ObservablePair<bool, string>(false, "Combo Weapon (C)"),
-                new ObservablePair<bool, string>(false, "Gravity Weapon"),
-                new ObservablePair<bool, string>(false, "???"),
-            };
-            WeaponChars = new()
-            {
-                new ObservablePair<bool, string>(false, "???"),
-                new ObservablePair<bool, string>(false, "Can be/Used to Slash"),
-                new ObservablePair<bool, string>(false, "Combination Attack"),
-                new ObservablePair<bool, string>(false, "Used to shoot down"),
-                new ObservablePair<bool, string>(false, "PS Armor Disabling"),
-                new ObservablePair<bool, string>(false, "Barrier Disabling"),
-                new ObservablePair<bool, string>(false, "Self Destruct"),
-                new ObservablePair<bool, string>(false, "Can be shot down"),
-            };
             WeaponTypeIndex = -1;
             this.WhenAnyValue(x => x.WeaponTypeIndex).Subscribe(_ => { if (WeaponTypeIndex != -1) WeaponTypeIndex = -1; });
         }
@@ -129,8 +68,6 @@ namespace SRWJEditV.ViewModels
                 WeaponName2 = WeaponPointers[x.NamePointer2];
                 MaxName2 = WeaponName1.Length + WeaponPointers.GetBytesRemaining(x.NamePointer2);
                 BulletTypeIndex = x.BulletFlag > 7 ? (byte)8 : x.BulletFlag;
-                WeaponTypes.SetBoolsFromByte(x.Flag);
-                WeaponChars.SetBoolsFromByte(x.Characteristic);
             });
 
             //When the WeaponName changes, update the Dictionary, SelectedPointer, and the WeaponList
@@ -178,15 +115,6 @@ namespace SRWJEditV.ViewModels
                     SelectedWeapon.BulletFlag=255;
                 if (x < 8 && x >= 0 && SelectedWeapon.BulletFlag != x) 
                     SelectedWeapon.BulletFlag=x;
-            });
-
-            WeaponTypes.ListChanged += new ListChangedEventHandler((sender, e) =>
-            {
-                SelectedWeapon.Flag = WeaponTypes.GetByteFromBools();
-            });
-            WeaponChars.ListChanged += new ListChangedEventHandler((sender, e) =>
-            {
-                SelectedWeapon.Characteristic = WeaponChars.GetByteFromBools();
             });
         }
 

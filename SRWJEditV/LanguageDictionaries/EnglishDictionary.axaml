@@ -1,0 +1,103 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+					xmlns:col="clr-namespace:System.Collections;assembly=mscorlib">
+	<!--Main Window-->
+	<x:String x:Key="Menu.File">_File</x:String>
+	<x:String x:Key="Menu.Open">_Open...</x:String>
+	<x:String x:Key="Menu.Save">_Save</x:String>
+	<x:String x:Key="Menu.SaveAs">Save _As...</x:String>
+	<x:String x:Key="Menu.Exit">E_xit</x:String>
+	<x:String x:Key="Menu.Edit">_Edit</x:String>
+	<x:String x:Key="Menu.Options">_Options</x:String>
+	<x:String x:Key="Menu.Language">_Language</x:String>
+	<x:String x:Key="Menu.Help">_Help</x:String>
+	<x:String x:Key="Haru">&lt;3 haru</x:String>
+
+	<!--Editor Menu Items-->
+	<x:String x:Key="Weapon">Weapon</x:String>
+
+	<!--Shared-->
+	<x:String x:Key="Shared.Name1">Name1</x:String>
+	<x:String x:Key="Shared.Name1Pointer">Name1 Pointer</x:String>
+	<x:String x:Key="Shared.Name2">Name2</x:String>
+	<x:String x:Key="Shared.Name2Pointer">Name2 Pointer</x:String>
+	<x:String x:Key="Shared.Weapons">Weapon</x:String>
+	<x:String x:Key="Shared.Stats">Stats</x:String>
+	<x:String x:Key="Shared.Attack">Attack</x:String>
+	<x:String x:Key="Shared.Energy">Energy</x:String>
+	<x:String x:Key="Shared.Spirit">Spirit</x:String>
+	<x:String x:Key="Shared.BGM">BGM</x:String>
+	<x:String x:Key="Shared.Sky">Sky</x:String>
+	<x:String x:Key="Shared.Sea">Sea</x:String>
+	<x:String x:Key="Shared.Land">Land</x:String>
+	<x:String x:Key="Shared.Cosmos">Cosmos</x:String>
+
+	<!--WeaponView-->
+	<x:String x:Key="WeaponView.Title">Weapon Editor</x:String>
+	<x:String x:Key="WeaponView.WeaponList">Weapons</x:String>
+	<x:String x:Key="WeaponView.EnergyCost">Energy</x:String>
+	<x:String x:Key="WeaponView.SpiritCost">Spirit</x:String>
+	<x:String x:Key="WeaponView.MinRange">MinRange</x:String>
+	<x:String x:Key="WeaponView.MaxRange">MaxRange</x:String>
+	<x:String x:Key="WeaponView.Hit">Hit+</x:String>
+	<x:String x:Key="WeaponView.Critical">Critical+</x:String>
+	<x:String x:Key="WeaponView.BulletType">Bullet Type</x:String>
+	<col:ArrayList x:Key="WeaponView.BulletTypes">
+		<x:String>0</x:String>
+		<x:String>1</x:String>
+		<x:String>2</x:String>
+		<x:String>3</x:String>
+		<x:String>4</x:String>
+		<x:String>5</x:String>
+		<x:String>6</x:String>
+		<x:String>7</x:String>
+		<x:String>N/A</x:String>
+	</col:ArrayList>
+	<x:String x:Key="WeaponView.Bullets">Bullets</x:String>
+	<x:String x:Key="WeaponView.UnitGroup">Unit Group for combined attack</x:String>
+	<x:String x:Key="WeaponView.PilotGroup">Pilot Group for combined attack</x:String>
+	<x:String x:Key="WeaponView.RequiredSkills">Required Skills</x:String>
+	<x:String x:Key="WeaponView.Conditions">Usable conditions</x:String>
+	<x:String x:Key="WeaponView.UpgradeIncrease">Attack increase per upgrade</x:String>
+	<x:String x:Key="WeaponView.AdditionalEffect">Additional effect</x:String>
+	<col:ArrayList x:Key="WeaponView.Effects">
+		<x:String>Halved movement next turn</x:String>
+		<x:String>30% reduced armor next turn</x:String>
+		<x:String>Halved mobility next turn</x:String>
+		<x:String>Halved weapon power next turn</x:String>
+		<x:String>Target EN to 0</x:String>
+		<x:String>Target EN-10 SP-30</x:String>
+		<x:String>No effect</x:String>
+	</col:ArrayList>
+	<x:String x:Key="WeaponView.WeaponFlags">Weapon Flags</x:String>
+	<col:ArrayList x:Key="WeaponView.Flags">
+		<x:String>Melee Weapon</x:String>
+		<x:String>Shooting Weapon</x:String>
+		<x:String>Post-Movement Weapon (P)</x:String>
+		<x:String>Beam Weapon (B)</x:String>
+		<x:String>MAP Weapon (M)</x:String>
+		<x:String>Combo Weapon (C)</x:String>
+		<x:String>Gravity Weapon (G)</x:String>
+		<x:String>???</x:String>
+	</col:ArrayList>
+	<x:String x:Key="WeaponView.WeaponCharacteristics">Weapon Characteristics</x:String>
+	<col:ArrayList x:Key="WeaponView.Characteristics">
+		<x:String>???</x:String>
+		<x:String>Can be/used to slash</x:String>
+		<x:String>Combination Attack</x:String>
+		<x:String>Used to shoot down</x:String>
+		<x:String>PS Armor disabling</x:String>
+		<x:String>Barrier disabling</x:String>
+		<x:String>Self destruct</x:String>
+		<x:String>Can be shot down</x:String>		
+	</col:ArrayList>
+	<x:String x:Key="WeaponView.Effectiveness">Effectiveness</x:String>
+	<col:ArrayList x:Key="WeaponView.Grades">
+		<x:String>-</x:String>
+		<x:String>C</x:String>
+		<x:String>B</x:String>
+		<x:String>A</x:String>
+		<x:String>S</x:String>
+	</col:ArrayList>
+	
+</ResourceDictionary>

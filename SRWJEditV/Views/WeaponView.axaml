@@ -2,12 +2,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:views="clr-namespace:SRWJEditV.Views;assembly=SRWJEditV"
         xmlns:vm="using:SRWJEditV.ViewModels"
         mc:Ignorable="d"
         x:Class="SRWJEditV.Views.WeaponView"
         Title="Weapon Editor"
 		WindowStartupLocation="CenterOwner"
-		Width="860"
+		Width="890"
 		Height="620"
 		ExtendClientAreaToDecorationsHint="True"
 		FontFamily="ヒラギノ角ゴ Pro W3, Hiragino Kaku Gothic Pro, Osaka, メイリオ, Meiryo, ＭＳ Ｐゴシック, MS PGothic, MS Mincho, sans-serif">
@@ -18,7 +19,7 @@
 		<StackPanel DockPanel.Dock="Top" Orientation="Vertical">
 			<StackPanel Orientation="Horizontal">
 				<Image Margin="5" Source="/Assets/SRWJEdit.ico" Width="15"/>
-				<TextBlock Margin="5" IsHitTestVisible="False">Weapon Editor</TextBlock>
+				<TextBlock Margin="5" IsHitTestVisible="False" Text="{DynamicResource WeaponView.Title}"/>
 			</StackPanel>
 		</StackPanel>
 		<Panel>
@@ -31,10 +32,10 @@
 						MaterialOpacity="0.65"/>
 				</ExperimentalAcrylicBorder.Material>
 			</ExperimentalAcrylicBorder>
-			<DockPanel>
+			<DockPanel Margin="0,5,0,0">
 				<!--Weapons List-->
 				<StackPanel Orientation="Vertical" DockPanel.Dock="Left" HorizontalAlignment="Left" Margin="10,0,0,0">
-					<TextBlock FontSize="14" Margin="8,0,0,3">Weapons:</TextBlock>
+					<TextBlock FontSize="14" Margin="8,0,0,3" Text="{DynamicResource WeaponView.WeaponList}"></TextBlock>
 
 					<ListBox Width="250" Height="360"
 							 VerticalAlignment="Top"
@@ -60,15 +61,15 @@
 				</StackPanel>
 
 				<!--Stats Section-->
-				<StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,0,0,0">
-					<TextBlock FontSize="14" Margin="8,0,0,3">Stats:</TextBlock>
+				<StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,0,0,0" Width="330">
+					<TextBlock FontSize="14" Margin="8,0,0,3" Text="{DynamicResource Shared.Stats}"/>
 					<StackPanel Orientation="Horizontal">
-						<TextBlock Width="60" Margin="0,5,0,0">Name1:</TextBlock>
+						<TextBlock Width="80" Margin="0,5,0,0" Text="{DynamicResource Shared.Name1}"/>
 						<TextBox Width="250" MaxHeight="20" FontSize="12" Text="{Binding WeaponName1}" MaxLength="{Binding MaxName1}" />
 					</StackPanel>
 					<StackPanel Orientation="Horizontal">
-						<TextBlock Width="110" Margin="0,5,0,0">Name1 Pointer:</TextBlock>
-						<ComboBox Name="Point1Combo" Width="200" Items="{Binding ObservablePointers}" SelectedIndex="{Binding SelectedPointer1}">
+						<TextBlock Width="130" Margin="0,5,0,0" Text="{DynamicResource Shared.Name1Pointer}"/>
+						<ComboBox Name="Point1Combo" Margin="20,0,0,0" Width="180" Items="{Binding ObservablePointers}" SelectedIndex="{Binding SelectedPointer1}">
 							<ComboBox.ItemTemplate>
 								<DataTemplate>
 									<Panel>
@@ -83,12 +84,12 @@
 						</ComboBox>
 					</StackPanel>
 					<StackPanel Orientation="Horizontal">
-						<TextBlock Width="60" Margin="0,5,0,0">Name2:</TextBlock>
+						<TextBlock Width="80" Margin="0,5,0,0" Text="{DynamicResource Shared.Name2}"/>
 						<TextBox Width="250" MaxHeight="20" FontSize="12" Text="{Binding WeaponName2}" MaxLength="{Binding MaxName2}"/>
 					</StackPanel>
 					<StackPanel Orientation="Horizontal">
-						<TextBlock Width="110" Margin="0,5,0,0">Name2 Pointer:</TextBlock>
-						<ComboBox Name="Point2Combo" Width="200" Items="{Binding ObservablePointers}" SelectedIndex="{Binding SelectedPointer2}">
+						<TextBlock Width="130" Margin="0,5,0,0" Text="{DynamicResource Shared.Name2Pointer}"/>
+						<ComboBox Name="Point2Combo" Margin="20,0,0,0" Width="180" Items="{Binding ObservablePointers}" SelectedIndex="{Binding SelectedPointer2}">
 							<ComboBox.ItemTemplate>
 								<DataTemplate>
 									<Panel>
@@ -104,115 +105,87 @@
 					</StackPanel>
 					<!--Attack -->
 					<StackPanel Orientation="Horizontal" Margin="0,5,0,0">
-						<TextBlock Width="60" Margin="0,5,0,0" Text="Attack:"/>
+						<TextBlock Width="60" Margin="0,5,0,0" Text="{DynamicResource Shared.Attack}"/>
 						<NumericUpDown ShowButtonSpinner="False" Maximum="32767" Minimum="-32768" Increment="100" Value="{Binding SelectedWeapon.Attack}" Width="90"/>
 					</StackPanel>
 					<!--Energy / Spirit -->
 					<StackPanel Orientation="Horizontal">
-						<TextBlock Width="80" Margin="0,5,0,0" Text="Energy:"/>
+						<TextBlock Width="80" Margin="0,5,0,0" Text="{DynamicResource WeaponView.EnergyCost}"/>
 						<NumericUpDown ShowButtonSpinner="False" Maximum="255" Minimum="0" Increment="10" Value="{Binding SelectedWeapon.Energy}" Width="70"/>
-						<TextBlock Width="80" Margin="10,5,0,0" Text="Spirit:"/>
+						<TextBlock Width="100" Margin="10,5,0,0" Text="{DynamicResource WeaponView.SpiritCost}"/>
 						<NumericUpDown ShowButtonSpinner="False" Maximum="255" Minimum="0" Increment="10" Value="{Binding SelectedWeapon.Spirit}" Width="70"/>
 					</StackPanel>
 					<!--Min / Max Range-->
 					<StackPanel Orientation="Horizontal">
-						<TextBlock Width="80" Margin="0,5,0,0" Text="MinRange:"/>
+						<TextBlock Width="80" Margin="0,5,0,0" Text="{DynamicResource WeaponView.MinRange}"/>
 						<NumericUpDown ShowButtonSpinner="False" Maximum="127" Minimum="1" Increment="1" Value="{Binding SelectedWeapon.MinimumRange}" Width="70"/>
-						<TextBlock Width="80" Margin="10,5,0,0" Text="MaxRange:"/>
+						<TextBlock Width="100" Margin="10,5,0,0" Text="{DynamicResource WeaponView.MaxRange}"/>
 						<NumericUpDown ShowButtonSpinner="False" Maximum="127" Minimum="1" Increment="1" Value="{Binding SelectedWeapon.MaximumRange}" Width="70"/>
 					</StackPanel>
 					<!--Hit / Critical-->
 					<StackPanel Orientation="Horizontal">
-						<TextBlock Width="80" Margin="0,5,0,0" Text="Hit+:"/>
+						<TextBlock Width="80" Margin="0,5,0,0" Text="{DynamicResource WeaponView.Hit}"/>
 						<NumericUpDown ShowButtonSpinner="False" Maximum="127" Minimum="-128" Increment="10" Value="{Binding SelectedWeapon.Hit}" Width="70"/>
-						<TextBlock Width="80" Margin="10,5,0,0" Text="Critial+:"/>
+						<TextBlock Width="100" Margin="10,5,0,0" Text="{DynamicResource WeaponView.Critical}"/>
 						<NumericUpDown ShowButtonSpinner="False" Maximum="127" Minimum="-128" Increment="10" Value="{Binding SelectedWeapon.Critical}" Width="70"/>
 					</StackPanel>
 					<!--Bullet Flag / Bullets-->
 					<StackPanel Orientation="Horizontal">
-						<TextBlock Width="80" Margin="0,5,0,0" Text="Bullet Type:"/>
-						<ComboBox Items="{Binding BulletTypes}"  SelectedIndex="{Binding BulletTypeIndex}" Width="70"/>
-						<TextBlock Width="80" Margin="10,5,0,0" Text="Bullets:"/>
+						<TextBlock Width="80" Margin="0,5,0,0" Text="{DynamicResource WeaponView.BulletType}"/>
+						<ComboBox Items="{DynamicResource WeaponView.BulletTypes}"  SelectedIndex="{Binding BulletTypeIndex}" Width="70"/>
+						<TextBlock Width="100" Margin="10,5,0,0" Text="{DynamicResource WeaponView.Bullets}"/>
 						<NumericUpDown ShowButtonSpinner="False" Maximum="255" Minimum="0" Increment="1" Value="{Binding SelectedWeapon.Bullet}" Width="70"/>
 					</StackPanel>
 					<StackPanel Orientation="Horizontal" Margin="0,4,0,0">
-						<TextBlock Width="240" Margin="0,5,0,0" Text="Unit Group for combined attack:"/>
+						<TextBlock Width="260" Margin="0,5,0,0" Text="{DynamicResource WeaponView.UnitGroup}"/>
 						<NumericUpDown ShowButtonSpinner="False" Maximum="255" Minimum="0" Increment="1" Value="{Binding SelectedWeapon.UnitGroupCombo}" Width="70"/>
 					</StackPanel>
 					<StackPanel Orientation="Horizontal">
-						<TextBlock Width="240" Margin="0,5,0,0" Text="Pilot Group for combined attack:"/>
+						<TextBlock Width="260" Margin="0,5,0,0" Text="{DynamicResource WeaponView.PilotGroup}"/>
 						<NumericUpDown ShowButtonSpinner="False" Maximum="255" Minimum="0" Increment="1" Value="{Binding SelectedWeapon.PilotGroupCombo}" Width="70"/>
 					</StackPanel>
 					<StackPanel Orientation="Horizontal">
-						<TextBlock Width="240" Margin="0,5,0,0" Text="Required Skills:"/>
+						<TextBlock Width="260" Margin="0,5,0,0" Text="{DynamicResource WeaponView.RequiredSkills}"/>
 						<NumericUpDown ShowButtonSpinner="False" Maximum="255" Minimum="0" Increment="1" Value="{Binding SelectedWeapon.RequiredSkill}" Width="70"/>
 					</StackPanel>
 					<StackPanel Orientation="Horizontal">
-						<TextBlock Width="240" Margin="0,5,0,0" Text="Usable conditions:"/>
+						<TextBlock Width="260" Margin="0,5,0,0" Text="{DynamicResource WeaponView.Conditions}"/>
 						<NumericUpDown ShowButtonSpinner="False" Maximum="255" Minimum="0" Increment="1" Value="{Binding SelectedWeapon.UseConditions}" Width="70"/>
 					</StackPanel>
 					<StackPanel Orientation="Horizontal">
-						<TextBlock Width="240" Margin="0,5,0,0" Text="Attack increase per upgrade:"/>
+						<TextBlock Width="260" Margin="0,5,0,0" Text="{DynamicResource WeaponView.UpgradeIncrease}"/>
 						<NumericUpDown ShowButtonSpinner="False" Maximum="255" Minimum="0" Increment="1" Value="{Binding SelectedWeapon.AttackUpgrade}" Width="70"/>
 					</StackPanel>
 					<StackPanel Orientation="Horizontal" Margin="0,3,0,0">
-						<TextBlock Width="130" Margin="0,5,0,0" Text="Additional effect:"/>
-						<ComboBox Items="{Binding SpecialEffects}"  SelectedIndex="{Binding SelectedWeapon.AddedEffect}" Width="180"/>
+						<TextBlock Width="150" Margin="0,5,0,0" Text="{DynamicResource WeaponView.AdditionalEffect}"/>
+						<ComboBox Items="{DynamicResource WeaponView.Effects}"  SelectedIndex="{Binding SelectedWeapon.AddedEffect}" Width="180"/>
 					</StackPanel>
 					<StackPanel Orientation="Horizontal" Margin="0,3,0,0">
-						<TextBlock Width="60" Margin="0,5,0,0" Text="BGM:"/>
+						<TextBlock Width="80" Margin="0,5,0,0" Text="{DynamicResource Shared.BGM}"/>
 						<NumericUpDown ShowButtonSpinner="False" Maximum="255" Minimum="0" Increment="1" Value="{Binding SelectedWeapon.AddedEffect}" Width="250"/>
 					</StackPanel>
 				</StackPanel>
 				
 				<!--Flags/Checkboxes-->
 				<StackPanel VerticalAlignment="Top" Margin="0,0,0,0">
-					<TextBlock FontSize="14" Margin="15,0,0,3">Weapon Flags:</TextBlock>
-					<ListBox Height="215" Width="250" Items="{Binding WeaponTypes}" SelectedIndex="{Binding WeaponTypeIndex}" Padding="0,3,0,0" Margin="5,0,0,0">
-						<ListBox.ItemTemplate>
-							<DataTemplate>
-								<StackPanel Orientation="Horizontal" Margin="10,-3,0,-3">
-									<CheckBox IsChecked="{Binding Item1}"  />
-									<TextBlock FontSize="12" Margin="0,8,0,0" Text="{Binding Item2}"/>
-								</StackPanel>
-							</DataTemplate>
-						</ListBox.ItemTemplate>
-						<ListBox.Styles>
-							<Style Selector="ListBoxItem">
-								<Setter Property="Margin" Value="0"/>
-								<Setter Property="Padding" Value="0"/>
-							</Style>
-						</ListBox.Styles>
-					</ListBox>
-					<TextBlock FontSize="14" Margin="15,5,0,3">Weapon Characteristics:</TextBlock>
-					<ListBox Height="215" Width="250" Items="{Binding WeaponChars}" SelectedIndex="{Binding WeaponTypeIndex}" Padding="0,3,0,0" Margin="5,0,0,0">
-						<ListBox.ItemTemplate>
-							<DataTemplate>
-								<StackPanel Orientation="Horizontal" Margin="10,-3,0,-3">
-									<CheckBox IsChecked="{Binding Item1}" />
-									<TextBlock FontSize="12" Margin="0,8,0,0" Text="{Binding Item2}"/>
-								</StackPanel>
-							</DataTemplate>
-						</ListBox.ItemTemplate>
-						<ListBox.Styles>
-							<Style Selector="ListBoxItem">
-								<Setter Property="Margin" Value="0"/>
-								<Setter Property="Padding" Value="0"/>
-							</Style>
-						</ListBox.Styles>
-					</ListBox>
-					<TextBlock Margin="15,5,0,-3" Text="Effectiveness"/>
+					<TextBlock FontSize="14" Margin="15,0,0,3" Text="{DynamicResource WeaponView.WeaponFlags}"/>
+					<views:ByteCheckList Items="{DynamicResource WeaponView.Flags}" Value="{Binding SelectedWeapon.Flag}" Margin="15,0,0,0"/>
+
+					<TextBlock FontSize="14" Margin="15,5,0,3" Text="{DynamicResource WeaponView.WeaponCharacteristics}"/>
+					<views:ByteCheckList Items="{DynamicResource WeaponView.Characteristics}" Value="{Binding SelectedWeapon.Characteristic}" Margin="15,0,0,0"/>
+
+					<TextBlock Margin="15,5,0,0" Text="{DynamicResource WeaponView.Effectiveness}"/>
 					<StackPanel Margin="20,0,0,0" Orientation="Horizontal">
-						<TextBlock Margin="0,5,0,0" Width="40">Sky:</TextBlock>
-						<ComboBox Items="{Binding Effectiveness}" SelectedIndex="{Binding SelectedWeapon.AdaptationSky}" Width="70"/>
-						<TextBlock Margin="5,5,0,0" Width="60">Land:</TextBlock>
-						<ComboBox Items="{Binding Effectiveness}" SelectedIndex="{Binding SelectedWeapon.AdaptationLand}" Width="70"/>
+						<TextBlock Margin="0,5,0,0" Width="40" Text="{DynamicResource Shared.Sky}"/>
+						<ComboBox Items="{DynamicResource WeaponView.Grades}" SelectedIndex="{Binding SelectedWeapon.AdaptationSky}" Width="70"/>
+						<TextBlock Margin="5,5,0,0" Width="60" Text="{DynamicResource Shared.Land}"/>
+						<ComboBox Items="{DynamicResource WeaponView.Grades}" SelectedIndex="{Binding SelectedWeapon.AdaptationLand}" Width="70"/>
 					</StackPanel>
 					<StackPanel Margin="20,0,0,0" Orientation="Horizontal">
-						<TextBlock Margin="0,5,0,0" Width="40">Sea:</TextBlock>
-						<ComboBox Items="{Binding Effectiveness}" SelectedIndex="{Binding SelectedWeapon.AdaptationSea}" Width="70"/>
-						<TextBlock Margin="5,5,0,0" Width="60">Cosmos:</TextBlock>
-						<ComboBox Items="{Binding Effectiveness}" SelectedIndex="{Binding SelectedWeapon.AdaptationCosmos}" Width="70"/>
+						<TextBlock Margin="0,5,0,0" Width="40" Text="{DynamicResource Shared.Sea}"/>
+						<ComboBox Items="{DynamicResource WeaponView.Grades}" SelectedIndex="{Binding SelectedWeapon.AdaptationSea}" Width="70"/>
+						<TextBlock Margin="5,5,0,0" Width="60" Text="{DynamicResource Shared.Cosmos}"/>
+						<ComboBox Items="{DynamicResource WeaponView.Grades}" SelectedIndex="{Binding SelectedWeapon.AdaptationCosmos}" Width="70"/>
 					</StackPanel>
 				</StackPanel>
 			</DockPanel>

@@ -19,24 +19,30 @@
 	</Design.DataContext>
 	<DockPanel>
 		<StackPanel DockPanel.Dock="Top" Orientation="Vertical">
+			<!--TitleBar-->
 			<StackPanel Orientation="Horizontal">
 				<Image Margin="5" Source="/Assets/SRWJEdit.ico" Width="15"/>
 				<TextBlock Margin="5" IsHitTestVisible="False" Text="{Binding $parent[Window].Title}"/>
 			</StackPanel>
+			<!--MenuItems-->
 			<Menu DockPanel.Dock="Top">
-				<MenuItem Header="_File">
-					<MenuItem Header="_Open" Command="{Binding OpenFile}"/>
-					<MenuItem Name="Save" IsEnabled="{Binding fileLoaded}" Header="_Save (Overwrite)"/>
-					<MenuItem Name="SaveAs" IsEnabled="{Binding fileLoaded}" Header="Save _As..."/>
+				<MenuItem Header="{DynamicResource Menu.File}">
+					<MenuItem Header="{DynamicResource Menu.Open}" Command="{Binding OpenFile}" InputGesture="Ctrl+O" HotKey="Ctrl+O"/>
+					<MenuItem IsEnabled="{Binding fileLoaded}" Header="{DynamicResource Menu.Save}" Command="{Binding SaveFile}" InputGesture="Ctrl+S" HotKey="Ctrl+S"/>
+					<!--<MenuItem IsEnabled="{Binding fileLoaded}" Header="{DynamicResource Menu.SaveAs}"/>-->
 					<Separator/>
-					<MenuItem Name="Exit" Header="_Exit"/>
+					<MenuItem Name="Exit" Header="{DynamicResource Menu.Exit}"/>
 				</MenuItem>
-				<MenuItem Header="_Edit" Items="{Binding EditorMenuItems}"/>
-				<MenuItem Header="Help" Name="HelpMenu">
+				<MenuItem Header="{DynamicResource Menu.Edit}" Items="{Binding EditorMenuItems}"/>
+				<MenuItem Header="{DynamicResource Menu.Options}" Name="OptionMenu">
+					<MenuItem Header="{DynamicResource Menu.Language}" Items="{Binding LanguageItems}"></MenuItem>
+				</MenuItem>				
+				<MenuItem Header="{DynamicResource Menu.Help}" Name="HelpMenu">
 					<!--Todo: Add help menu stuff-->
 				</MenuItem>
 			</Menu>
 		</StackPanel>
+		<!--Content-->
 		<Panel>
 			<ExperimentalAcrylicBorder IsHitTestVisible="False">
 				<ExperimentalAcrylicBorder.Material>
@@ -48,11 +54,9 @@
 				</ExperimentalAcrylicBorder.Material>
 			</ExperimentalAcrylicBorder>
 			<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-				<TextBlock Text="{Binding Greeting}"/>
-				<TextBlock Text="{Binding GameString}"/>
+				<TextBlock Text="{DynamicResource Haru}"/>
 			</StackPanel>
 		</Panel>
-
 	</DockPanel>
 
 </Window>

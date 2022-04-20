@@ -1,0 +1,102 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+					xmlns:col="clr-namespace:System.Collections;assembly=mscorlib">
+	<!--Main Window-->
+	<x:String x:Key="Menu.File">ファイル(_F)</x:String>
+	<x:String x:Key="Menu.Open">開く(_O)</x:String>
+	<x:String x:Key="Menu.Save">上書き保存(_S)</x:String>
+	<x:String x:Key="Menu.SaveAs">名前をつけて保存(_A)</x:String>
+	<x:String x:Key="Menu.Exit">閉じる(_X)</x:String>
+	<x:String x:Key="Menu.Edit">編集(_E)</x:String>
+	<x:String x:Key="Menu.Options">オプション(_O)</x:String>
+	<x:String x:Key="Menu.Language">言語(_L)</x:String>
+	<x:String x:Key="Menu.Help">ヘルプ(_H)</x:String>
+	<x:String x:Key="Haru">&lt;3 haruさん</x:String>
+
+	<!--Editor Menu Items-->
+	<x:String x:Key="Weapon">武器</x:String>
+
+	<!--Shared-->
+	<x:String x:Key="Shared.Name1">武器名１</x:String>
+	<x:String x:Key="Shared.Name1Pointer">武器名１アドレス</x:String>
+	<x:String x:Key="Shared.Name2">武器名２</x:String>
+	<x:String x:Key="Shared.Name2Pointer">武器名２アドレス</x:String>
+	<x:String x:Key="Shared.Weapon">武器</x:String>
+	<x:String x:Key="Shared.Stats">統計</x:String>
+	<x:String x:Key="Shared.Attack">攻撃力</x:String>
+	<x:String x:Key="Shared.Energy">EN</x:String>
+	<x:String x:Key="Shared.Spirit">気力</x:String>
+	<x:String x:Key="Shared.BGM">BGM</x:String>
+	<x:String x:Key="Shared.Sky">空</x:String>
+	<x:String x:Key="Shared.Sea">海</x:String>
+	<x:String x:Key="Shared.Land">陸</x:String>
+	<x:String x:Key="Shared.Cosmos">宇</x:String>
+
+	<!--WeaponView-->
+	<x:String x:Key="WeaponView.Title">Weapon</x:String>
+	<x:String x:Key="WeaponView.WeaponList">武器リスト</x:String>
+	<x:String x:Key="WeaponView.EnergyCost">消費EN</x:String>
+	<x:String x:Key="WeaponView.SpiritCost">必要気力</x:String>
+	<x:String x:Key="WeaponView.MinRange">最低射程</x:String>
+	<x:String x:Key="WeaponView.MaxRange">最大射程</x:String>
+	<x:String x:Key="WeaponView.Hit">命中＋</x:String>
+	<x:String x:Key="WeaponView.Critical">クリティカル＋</x:String>
+	<x:String x:Key="WeaponView.BulletType">弾数フラグ</x:String>
+	<col:ArrayList x:Key="WeaponView.BulletTypes">
+		<x:String>0</x:String>
+		<x:String>1</x:String>
+		<x:String>2</x:String>
+		<x:String>3</x:String>
+		<x:String>4</x:String>
+		<x:String>5</x:String>
+		<x:String>6</x:String>
+		<x:String>7</x:String>
+		<x:String>N/A</x:String>
+	</col:ArrayList>
+	<x:String x:Key="WeaponView.Bullets">弾数</x:String>
+	<x:String x:Key="WeaponView.UnitGroup">合体攻撃可能なユニットグループ</x:String>
+	<x:String x:Key="WeaponView.PilotGroup">合体攻撃可能なパイロットグループ</x:String>
+	<x:String x:Key="WeaponView.RequiredSkills">必要技能</x:String>
+	<x:String x:Key="WeaponView.Conditions">使用可能条件</x:String>
+	<x:String x:Key="WeaponView.UpgradeIncrease">改造時攻撃力上昇値</x:String>
+	<x:String x:Key="WeaponView.AdditionalEffect">特殊効果武器</x:String>
+	<col:ArrayList x:Key="WeaponView.Effects">
+		<x:String>移動力が1ターンの間半減</x:String>
+		<x:String>1ターンの間装甲値30%減</x:String>
+		<x:String>運動性が1ターンの間半減</x:String>
+		<x:String>武器攻撃力が1ターンの間半減</x:String>
+		<x:String>相手のEN0</x:String>
+		<x:String>相手の気力-10、SP-30</x:String>
+		<x:String>特殊効果無し</x:String>
+	</col:ArrayList>
+	<x:String x:Key="WeaponView.WeaponFlags">武器タイプ</x:String>
+	<col:ArrayList x:Key="WeaponView.Flags">
+		<x:String>格闘武器</x:String>
+		<x:String>射撃武器</x:String>
+		<x:String>移動後攻撃 (Ｐ)</x:String>
+		<x:String>ビーム兵器 (Ｂ)</x:String>
+		<x:String>ＭＡＰ兵器 (Ｍ)</x:String>
+		<x:String>コンボ武器 (Ｃ)</x:String>
+		<x:String>グラビティ兵器 (Ｇ)</x:String>
+		<x:String>???</x:String>
+	</col:ArrayList>
+	<x:String x:Key="WeaponView.WeaponCharacteristics">武器特性</x:String>
+	<col:ArrayList x:Key="WeaponView.Characteristics">
+		<x:String>???</x:String>
+		<x:String>斬り払い可、斬り払いに使える</x:String>
+		<x:String>合体攻撃</x:String>
+		<x:String>撃ち落しに使える</x:String>
+		<x:String>PS装甲無効</x:String>
+		<x:String>バリア無効</x:String>
+		<x:String>自爆</x:String>
+		<x:String>撃ち落し可</x:String>
+	</col:ArrayList>
+	<x:String x:Key="WeaponView.Effectiveness">地形適応</x:String>
+	<col:ArrayList x:Key="WeaponView.Grades">
+		<x:String>-</x:String>
+		<x:String>C</x:String>
+		<x:String>B</x:String>
+		<x:String>A</x:String>
+		<x:String>S</x:String>
+	</col:ArrayList>
+</ResourceDictionary>
