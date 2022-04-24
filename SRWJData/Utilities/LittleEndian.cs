@@ -5,9 +5,8 @@
         public static short GetInt16(byte[] bytes)
         {
             short value = 0;
-            for (int i = 0; i < bytes.Length; i++)
+            for (int i = 0; i < bytes.Length && i < 2; i++)
             {
-                if (i >= 2) break;
                 value += (short) (bytes[i] << (i * 8));
             }
             return value;
@@ -15,9 +14,8 @@
         public static int GetInt32(byte[] bytes)
         {
             int value = 0;
-            for (int i = 0; i < bytes.Length; i++)
+            for (int i = 0; i < bytes.Length && i < 4; i++)
             {
-                if (i >= 4) break;
                 value += bytes[i] << (i * 8);
             }
             return value;
@@ -25,9 +23,8 @@
         public static long GetInt64(byte[] bytes)
         {
             long value = 0;
-            for (int i = 0; i < bytes.Length; i++)
+            for (int i = 0; i < bytes.Length && i < 8; i++)
             {
-                if (i >= 8) break;
                 value += ((long)bytes[i] << (i * 8));
             }
             return value;

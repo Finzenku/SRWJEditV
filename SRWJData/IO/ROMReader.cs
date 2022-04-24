@@ -1,6 +1,7 @@
-﻿using SRWJData.Utilities;
-using SRWJData.Attributes;
+﻿using SRWJData.Attributes;
+using SRWJData.Extensions;
 using SRWJData.Models;
+using SRWJData.Utilities;
 using System.Text;
 
 namespace SRWJData.IO
@@ -21,7 +22,7 @@ namespace SRWJData.IO
         }
         private string ReadStringFromPointer(int pointerAddress)
         {
-            int pointer = LittleEndian.GetInt32(ReadData(pointerAddress, 4));
+            int pointer = ReadData(pointerAddress, 4).GetInt();
             return ReadString(pointer);
         }
 

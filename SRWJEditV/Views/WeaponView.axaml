@@ -58,6 +58,7 @@
 							</Style>
 						</ListBox.Styles>
 					</ListBox>
+					<TextBlock Text="{Binding SelectedWeapon.Unknown}"/>
 				</StackPanel>
 
 				<!--Stats Section-->

@@ -100,4 +100,12 @@
 		<x:String>S</x:String>
 	</col:ArrayList>
 	
+	<!--PowerPartView-->
+	<col:ArrayList x:Key="PowerPartView.Categories">
+		<x:String>-</x:String>
+		<x:String>Unit</x:String>
+		<x:String>Weapon</x:String>
+		<x:String>Consumable</x:String>
+	</col:ArrayList>
+	
 </ResourceDictionary>

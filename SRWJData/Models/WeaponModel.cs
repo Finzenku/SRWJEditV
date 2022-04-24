@@ -1,4 +1,5 @@
 ﻿using SRWJData.Attributes;
+using SRWJData.Extensions;
 using SRWJData.Utilities;
 
 namespace SRWJData.Models
@@ -40,13 +41,13 @@ namespace SRWJData.Models
         }
         public WeaponModel(byte[] weaponData)
         {
-            NamePointer1 = LittleEndian.GetInt32(weaponData.Take<byte>(4).ToArray());
-            NamePointer2 = LittleEndian.GetInt32(weaponData.Take<byte>(new Range(4, 8)).ToArray());
+            NamePointer1 = weaponData.GetInt(0);
+            NamePointer2 = weaponData.GetInt(4);
             Flag = weaponData[8];
             RequiredSkill = weaponData[9];
             UseConditions = weaponData[10];
             Characteristic = weaponData[11];
-            Attack = LittleEndian.GetInt16(new byte[] { weaponData[12], weaponData[13] });
+            Attack = weaponData.GetShort(12);
             Energy = weaponData[14];
             Hit = (sbyte)weaponData[15];
             Critical = (sbyte)weaponData[16];
@@ -69,7 +70,9 @@ namespace SRWJData.Models
 
         public byte[] GetData()
         {
-            byte[] p1 = LittleEndian.GetBytes(NamePointer1), p2 = LittleEndian.GetBytes(NamePointer2), atk = LittleEndian.GetBytes(Attack);
+            byte[] p1 = NamePointer1.GetBytes(),
+                p2 = NamePointer2.GetBytes(),
+                atk = Attack.GetBytes();
             return new byte[32]
             {
                 p1[0], p1[1], p1[2], p1[3],

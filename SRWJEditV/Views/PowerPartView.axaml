@@ -1,0 +1,174 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="using:SRWJEditV.ViewModels"
+        mc:Ignorable="d" Width="640" Height="400"
+        x:Class="SRWJEditV.Views.PowerPartView"
+        Title="Power Part"
+		FontFamily="ヒラギノ角ゴ Pro W3, Hiragino Kaku Gothic Pro, Osaka, メイリオ, Meiryo, ＭＳ Ｐゴシック, MS PGothic, MS Mincho, sans-serif"
+		TransparencyLevelHint="AcrylicBlur"
+		WindowStartupLocation="CenterScreen"
+		Background="Black"
+		ExtendClientAreaToDecorationsHint="True">
+
+	<Design.DataContext>
+		<vm:PowerPartViewModel/>
+	</Design.DataContext>
+	<DockPanel>
+		<!--TitleBar-->
+		<StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+			<Image Margin="5" Source="/Assets/SRWJEdit.ico" Width="15"/>
+			<TextBlock Margin="5" IsHitTestVisible="False" Text="{Binding $parent[Window].Title}"/>
+		</StackPanel>
+		<!--Content-->
+		<Panel>
+			<ExperimentalAcrylicBorder IsHitTestVisible="False">
+				<ExperimentalAcrylicBorder.Material>
+					<ExperimentalAcrylicMaterial
+						BackgroundSource="Digger"
+						TintColor="Black"
+						TintOpacity="1"
+						MaterialOpacity="0.65"/>
+				</ExperimentalAcrylicBorder.Material>
+			</ExperimentalAcrylicBorder>
+			<StackPanel Orientation="Horizontal">
+				<!--List-->
+				<StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,5,0,0">
+					<TextBlock FontSize="14" Margin="8,0,0,3" Text="Parts" />
+					<ListBox Items="{Binding PartNames}" Height="255" Width="160"
+							 SelectedIndex="{Binding SelectedIndex}"
+							 ScrollViewer.VerticalScrollBarVisibility="Visible">
+						<ListBox.ItemTemplate>
+							<DataTemplate>
+								<Border Margin="5,0,0,0">
+									<TextBlock FontSize="12" Text="{Binding}"/>
+								</Border>
+							</DataTemplate>
+						</ListBox.ItemTemplate>
+						<ListBox.Styles>
+							<Style Selector="ListBoxItem">
+								<Setter Property="Margin" Value="0"/>
+								<Setter Property="Padding" Value="0"/>
+							</Style>
+							<Style Selector="ScrollViewer">
+								<Setter Property="AllowAutoHide" Value="False"/>
+							</Style>
+						</ListBox.Styles>
+					</ListBox>
+				</StackPanel>
+				<!--Stats-->
+				<StackPanel Margin="15,5,0,0">
+					<TextBlock FontSize="14" Margin="8,0,0,3" Text="Stats"/>
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Text="Name" Width="80" VerticalAlignment="Center"/>
+						<TextBox Width="160" Text="{Binding SelectedPartName}"/>
+					</StackPanel>
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Text="Info1" Width="80" VerticalAlignment="Center"/>
+						<TextBox Width="160" Text="{Binding SelectedPartInfo1}"/>
+					</StackPanel>
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Text="Info2" Width="80" VerticalAlignment="Center"/>
+						<TextBox Width="160" Text="{Binding SelectedPartInfo2}"/>
+					</StackPanel>
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Text="Info3" Width="80" VerticalAlignment="Center"/>
+						<TextBox Width="160" Text="{Binding SelectedPartInfo3}"/>
+					</StackPanel>
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Text="Info4" Width="80" VerticalAlignment="Center"/>
+						<TextBox Width="160" Text="{Binding SelectedPartInfo4}"/>
+					</StackPanel>
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Text="Category" Width="80" VerticalAlignment="Center"/>
+						<ComboBox Width="160" Items="{DynamicResource PowerPartView.Categories}" SelectedIndex="{Binding SelectedCategory}"/>
+					</StackPanel>
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Text="Sell Price" Width="80" VerticalAlignment="Center"/>
+						<NumericUpDown Width="160" ShowButtonSpinner="False" Increment="100" Text="{Binding SelectedPart.SellPrice}"/>
+					</StackPanel>
+				</StackPanel>
+				<!--Pointers-->
+				<StackPanel Margin="15,5,0,0">
+					<TextBlock FontSize="14" Margin="8,0,0,3" Text="Pointers"/>
+					<StackPanel Orientation="Horizontal">
+						<ComboBox Height="34" Name="NamePointCombo" Width="180" Items="{Binding ObservablePointers}" SelectedIndex="{Binding SelectedNamePointer}">
+							<ComboBox.ItemTemplate>
+								<DataTemplate>
+									<Panel>
+										<StackPanel Orientation="Horizontal">
+											<TextBlock Text="{Binding Key, StringFormat={}{0:X8}}"/>
+											<TextBlock IsVisible="{Binding #NamePointCombo.IsDropDownOpen}" Text=": "/>
+											<TextBlock IsVisible="{Binding #NamePointCombo.IsDropDownOpen}" Text="{Binding Value}"/>
+										</StackPanel>
+									</Panel>
+								</DataTemplate>
+							</ComboBox.ItemTemplate>
+						</ComboBox>
+					</StackPanel>
+					<StackPanel Orientation="Horizontal">
+						<ComboBox Height="34" Name="Info1PointCombo" Width="180" Items="{Binding ObservablePointers}" SelectedIndex="{Binding SelectedInfo1Pointer}">
+							<ComboBox.ItemTemplate>
+								<DataTemplate>
+									<Panel>
+										<StackPanel Orientation="Horizontal">
+											<TextBlock Text="{Binding Key, StringFormat={}{0:X8}}"/>
+											<TextBlock IsVisible="{Binding #Info1PointCombo.IsDropDownOpen}" Text=": "/>
+											<TextBlock IsVisible="{Binding #Info1PointCombo.IsDropDownOpen}" Text="{Binding Value}"/>
+										</StackPanel>
+									</Panel>
+								</DataTemplate>
+							</ComboBox.ItemTemplate>
+						</ComboBox>
+					</StackPanel>
+					<StackPanel Orientation="Horizontal">
+						<ComboBox Height="34" Name="Info2PointCombo" Width="180" Items="{Binding ObservablePointers}" SelectedIndex="{Binding SelectedInfo2Pointer}">
+							<ComboBox.ItemTemplate>
+								<DataTemplate>
+									<Panel>
+										<StackPanel Orientation="Horizontal">
+											<TextBlock Text="{Binding Key, StringFormat={}{0:X8}}"/>
+											<TextBlock IsVisible="{Binding #Info2PointCombo.IsDropDownOpen}" Text=": "/>
+											<TextBlock IsVisible="{Binding #Info2PointCombo.IsDropDownOpen}" Text="{Binding Value}"/>
+										</StackPanel>
+									</Panel>
+								</DataTemplate>
+							</ComboBox.ItemTemplate>
+						</ComboBox>
+					</StackPanel>
+					<StackPanel Orientation="Horizontal">
+						<ComboBox Height="34" Name="Info3PointCombo" Width="180" Items="{Binding ObservablePointers}" SelectedIndex="{Binding SelectedInfo3Pointer}">
+							<ComboBox.ItemTemplate>
+								<DataTemplate>
+									<Panel>
+										<StackPanel Orientation="Horizontal">
+											<TextBlock Text="{Binding Key, StringFormat={}{0:X8}}"/>
+											<TextBlock IsVisible="{Binding #Info3PointCombo.IsDropDownOpen}" Text=": "/>
+											<TextBlock IsVisible="{Binding #Info3PointCombo.IsDropDownOpen}" Text="{Binding Value}"/>
+										</StackPanel>
+									</Panel>
+								</DataTemplate>
+							</ComboBox.ItemTemplate>
+						</ComboBox>
+					</StackPanel>
+					<StackPanel Orientation="Horizontal">
+						<ComboBox Height="34" Name="Info4PointCombo" Width="180" Items="{Binding ObservablePointers}" SelectedIndex="{Binding SelectedInfo4Pointer}">
+							<ComboBox.ItemTemplate>
+								<DataTemplate>
+									<Panel>
+										<StackPanel Orientation="Horizontal">
+											<TextBlock Text="{Binding Key, StringFormat={}{0:X8}}"/>
+											<TextBlock IsVisible="{Binding #Info4PointCombo.IsDropDownOpen}" Text=": "/>
+											<TextBlock IsVisible="{Binding #Info4PointCombo.IsDropDownOpen}" Text="{Binding Value}"/>
+										</StackPanel>
+									</Panel>
+								</DataTemplate>
+							</ComboBox.ItemTemplate>
+						</ComboBox>
+					</StackPanel>
+				</StackPanel>
+			</StackPanel>
+		</Panel>
+	</DockPanel>
+</Window>

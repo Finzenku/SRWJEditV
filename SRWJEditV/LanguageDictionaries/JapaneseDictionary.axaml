@@ -99,4 +99,12 @@
 		<x:String>A</x:String>
 		<x:String>S</x:String>
 	</col:ArrayList>
+
+	<!--PowerPartView-->
+	<col:ArrayList x:Key="Categories">
+		<x:String>-</x:String>
+		<x:String>機体</x:String>
+		<x:String>武器</x:String>
+		<x:String>消費</x:String>
+	</col:ArrayList>
 </ResourceDictionary>

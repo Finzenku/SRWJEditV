@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using SRWJData.Utilities;
+using System.Text;
 
 namespace SRWJData.Extensions
 {
@@ -27,5 +28,11 @@ namespace SRWJData.Extensions
         {
             return dict.GetStringByteLimit(address) - Encoding.GetEncoding(932).GetByteCount(dict[address]);            
         }
+
+        public static int GetInt(this byte[] data, int index = 0) => LittleEndian.GetInt32(data[index..(index+4)]);
+        public static short GetShort(this byte[] data, int index = 0) => LittleEndian.GetInt16(data[index..(index+2)]);
+
+        public static byte[] GetBytes(this int num) => LittleEndian.GetBytes(num);
+        public static byte[] GetBytes(this short num) => LittleEndian.GetBytes(num);
     }
 }
